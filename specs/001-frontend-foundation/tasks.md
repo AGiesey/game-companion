@@ -6,7 +6,7 @@ Each task ends with a local commit naming the feature and task (for example `001
 
 ## Phase 1: Setup
 
-- [ ] [T001] Install runtime dependency `@tanstack/react-query` and dev dependencies `tailwindcss`, `@tailwindcss/vite`, `vitest`, `jsdom`, `@testing-library/react`, `@testing-library/dom`, `@testing-library/user-event`, `@testing-library/jest-dom` in `web/package.json` (and `web/package-lock.json`). Confirm `npm run build` still passes.
+- [x] [T001] Install runtime dependency `@tanstack/react-query` and dev dependencies `tailwindcss`, `@tailwindcss/vite`, `vitest`, `jsdom`, `@testing-library/react`, `@testing-library/dom`, `@testing-library/user-event`, `@testing-library/jest-dom` in `web/package.json` (and `web/package-lock.json`). Confirm `npm run build` still passes.
 - [ ] [T002] Enable `"strict": true` in `web/tsconfig.app.json` and `web/tsconfig.node.json`; fix any type errors it surfaces. `npm run build` passes. (FR-3)
 
 ## Phase 2: Foundational
