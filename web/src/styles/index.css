@@ -1,0 +1,3 @@
+/* Global stylesheet, imported once from main.tsx. */
+@import 'tailwindcss';
+@import './fonts.css';

@@ -11,7 +11,7 @@ Each task ends with a local commit naming the feature and task (for example `001
 
 ## Phase 2: Foundational
 
-- [ ] [T003] Add Tailwind: register `tailwindcss()` from `@tailwindcss/vite` in `web/vite.config.ts`; create `web/src/styles/index.css` importing `tailwindcss` and `./fonts.css`; change `web/src/main.tsx` to import `./styles/index.css` instead of `./styles/fonts.css`. (FR-1)
+- [x] [T003] Add Tailwind: register `tailwindcss()` from `@tailwindcss/vite` in `web/vite.config.ts`; create `web/src/styles/index.css` importing `tailwindcss` and `./fonts.css`; change `web/src/main.tsx` to import `./styles/index.css` instead of `./styles/fonts.css`. (FR-1)
 - [ ] [T004] Configure Vitest: switch `web/vite.config.ts` to `defineConfig` from `vitest/config` with a `test` block (`environment: 'jsdom'`, `setupFiles: ['./src/test/setup.ts']`, `include: ['src/**/*.test.{ts,tsx}']`); create `web/src/test/setup.ts` (jest-dom matchers via `@testing-library/jest-dom/vitest`, `afterEach(cleanup)`); add `"test": "vitest run"` and `"test:watch": "vitest"` to `web/package.json`. Add a throwaway smoke test, confirm `npm test` passes and `npm run build` type-checks it, then delete it. (FR-2)
 - [ ] [T005] Add TanStack Query: create `web/src/queryClient.ts` exporting `createQueryClient()` (queries `retry: 1`); wrap `<App />` in `<QueryClientProvider>` in `web/src/main.tsx` with a client created once. Create `web/src/test/render.tsx` exporting `renderWithQuery(ui)` that renders inside a fresh client with `retry: false`. (FR-4)
 
