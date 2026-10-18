@@ -1,6 +1,7 @@
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+// vitest/config's defineConfig accepts Vite options plus the `test` block, so app and tests share one setup.
+import { defineConfig } from 'vitest/config'
 
 // Aspire injects the API's URL as API_HTTPS / API_HTTP (from WithReference(api) in the AppHost).
 const apiTarget = process.env.API_HTTPS ?? process.env.API_HTTP
@@ -16,5 +17,10 @@ export default defineConfig({
         secure: false,
       },
     },
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
   },
 })
