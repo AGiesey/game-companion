@@ -29,7 +29,7 @@ Each task ends with a local commit naming the feature and task (for example `001
 ## Phase 5: User Story — Ping on the new pattern (scenario 3)
 
 - [x] [T011] Create `web/src/api/ping.ts` with `PingResponse` and `getPing({ signal })` calling `apiGet<PingResponse>('/ping', { signal })`; rewrite `web/src/App.tsx` to read it with `useQuery({ queryKey: ['ping'], ... })`, keeping the three states (loading text, message and server time, `role="alert"` error), and add one Tailwind utility class to `<main>`. (FR-10)
-- [ ] [T012] Create `web/src/App.test.tsx` using `renderWithQuery` and `vi.mock('./api/ping')`: shows the loading text, then the ping message; shows the error alert when `getPing` rejects. (FR-11)
+- [x] [T012] Create `web/src/App.test.tsx` using `renderWithQuery` and `vi.mock('./api/ping')`: shows the loading text, then the ping message; shows the error alert when `getPing` rejects. (FR-11)
 
 ## Phase 6: Polish and verification
 
