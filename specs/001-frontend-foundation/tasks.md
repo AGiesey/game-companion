@@ -17,7 +17,7 @@ Each task ends with a local commit naming the feature and task (for example `001
 
 ## Phase 3: User Story — Calling real endpoints with readable errors (scenarios 3, 7)
 
-- [ ] [T006] Create `web/src/api/client.ts`: `ApiError` (explicit `status`, `title?`, `detail?`, `type?` fields) and `apiGet<T>` / `apiSend<T>` over a shared `request<T>()` that prefixes `/api`, sends/parses JSON, passes `signal`, returns `undefined` for 204, maps ProblemDetails and non-ProblemDetails failures to `ApiError`, maps network `TypeError` to `ApiError` with status 0, and rethrows `AbortError` unchanged. (FR-5, FR-6, FR-7)
+- [x] [T006] Create `web/src/api/client.ts`: `ApiError` (explicit `status`, `title?`, `detail?`, `type?` fields) and `apiGet<T>` / `apiSend<T>` over a shared `request<T>()` that prefixes `/api`, sends/parses JSON, passes `signal`, returns `undefined` for 204, maps ProblemDetails and non-ProblemDetails failures to `ApiError`, maps network `TypeError` to `ApiError` with status 0, and rethrows `AbortError` unchanged. (FR-5, FR-6, FR-7)
 - [ ] [T007] Create `web/src/api/client.test.ts` with `fetch` stubbed via `vi.stubGlobal`: JSON success; ProblemDetails error → `ApiError` with title, detail, status; plain-text error → `ApiError` with status and generic message; network failure → `ApiError` status 0. (FR-11)
 
 ## Phase 4: User Story — Stubbing endpoints that don't exist yet (scenarios 4, 6)
