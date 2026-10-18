@@ -1,0 +1,5 @@
+{
+  "appHost": {
+    "path": "GameCompanion.AppHost/GameCompanion.AppHost.csproj"
+  }
+}

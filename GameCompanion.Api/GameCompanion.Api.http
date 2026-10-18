@@ -1,0 +1,6 @@
+@GameCompanion.Api_HostAddress = http://localhost:5069
+
+GET {{GameCompanion.Api_HostAddress}}/api/ping
+Accept: application/json
+
+###

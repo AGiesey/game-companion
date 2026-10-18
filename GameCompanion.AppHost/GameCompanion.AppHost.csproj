@@ -1,0 +1,42 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.6.1">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <AspireUseCliBundle>true</AspireUseCliBundle>
+    <UserSecretsId>f2286d0f-da00-43ea-8487-7a558806cc40</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Azure.CosmosDB" Version="13.6.1" />
+    <PackageReference Include="Aspire.Hosting.JavaScript" Version="13.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Aspire.Hosting 13.6.1 pulls MessagePack 2.5.302 (GHSA-qhrr-8q5h-9q3h, fixed in 2.5.303).
+         Pin the patched version; remove once Aspire ships with it. -->
+    <PackageReference Include="MessagePack" Version="2.5.307" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- The Aspire version the MessagePack pin was added for. -->
+    <MessagePackPinnedForAspire>13.6.1</MessagePackPinnedForAspire>
+    <!-- GC0001 is a reminder, so keep it a warning rather than breaking the build. -->
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);GC0001</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <!-- Once Aspire is upgraded, the pin may no longer be needed. -->
+  <Target Name="CheckMessagePackPin" BeforeTargets="Build">
+    <PropertyGroup>
+      <AspireVersion>@(PackageReference->WithMetadataValue('Identity', 'Aspire.Hosting.Azure.CosmosDB')->Metadata('Version'))</AspireVersion>
+    </PropertyGroup>
+    <Warning Code="GC0001"
+             Condition="'$(AspireVersion)' != '$(MessagePackPinnedForAspire)'"
+             Text="Aspire is now $(AspireVersion) but the MessagePack pin was added for $(MessagePackPinnedForAspire). Remove the MessagePack PackageReference and run 'dotnet restore'. If there's no NU1903 warning for MessagePack, delete the pin and this check; otherwise set MessagePackPinnedForAspire to $(AspireVersion)." />
+  </Target>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GameCompanion.Api\GameCompanion.Api.csproj" />
+  </ItemGroup>
+
+</Project>

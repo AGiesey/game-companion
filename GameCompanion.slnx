@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="GameCompanion.Api/GameCompanion.Api.csproj" />
+  <Project Path="GameCompanion.AppHost/GameCompanion.AppHost.csproj" />
+  <Project Path="GameCompanion.ServiceDefaults/GameCompanion.ServiceDefaults.csproj" />
+</Solution>
