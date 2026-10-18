@@ -24,7 +24,7 @@ Each task ends with a local commit naming the feature and task (for example `001
 
 - [x] [T008] Create `web/src/api/stub.ts`: `stub<T>(data, { signal?, delayMs? })` (rejects with the abort reason when aborted), `stubStream(chunks, { signal?, delayMs? })` async generator (stops when aborted), default delays 400 ms / 40 ms, and `setStubDelays({ valueMs, chunkMs })`. (FR-8)
 - [x] [T009] Create `web/src/api/stub.test.ts` with delays set to 0: `stub` resolves with its data; `stubStream` yields all chunks in order; aborting `stub` rejects with an `AbortError`. (FR-11)
-- [ ] [T010] Create `web/src/api/README.md` documenting the API layer: one typed function per need, components use TanStack Query (or a custom hook for streams), the `// STUB: <need>` convention linked to `specs/backend-needs.md`, and how to replace a stub body with `apiGet`/`apiSend` without touching components. (FR-9, scenario 5)
+- [x] [T010] Create `web/src/api/README.md` documenting the API layer: one typed function per need, components use TanStack Query (or a custom hook for streams), the `// STUB: <need>` convention linked to `specs/backend-needs.md`, and how to replace a stub body with `apiGet`/`apiSend` without touching components. (FR-9, scenario 5)
 
 ## Phase 5: User Story — Ping on the new pattern (scenario 3)
 
