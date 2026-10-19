@@ -1,10 +1,45 @@
-import { QueryClient } from '@tanstack/react-query'
+import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query'
+import { sessionQueryKey } from './account/sessionQueryKey.ts'
+import { ApiError } from './api/client.ts'
 
-export function createQueryClient(): QueryClient {
-  return new QueryClient({
+interface AppMeta extends Record<string, unknown> {
+  // Set when a 401 is an expected answer (wrong password on sign-in) rather than an ended session.
+  expectsUnauthenticated?: boolean
+}
+
+// Types the `meta` option on every query and mutation.
+declare module '@tanstack/react-query' {
+  interface Register {
+    queryMeta: AppMeta
+    mutationMeta: AppMeta
+  }
+}
+
+// A 401 means the session has ended: drop everything cached for it and mark nobody signed in.
+// RequireSession then sends the player to sign-in, remembering where they were.
+export function handleUnauthenticated(queryClient: QueryClient, error: unknown, meta: AppMeta | undefined): void {
+  if (!(error instanceof ApiError) || error.status !== 401 || meta?.expectsUnauthenticated) return
+  queryClient.removeQueries({ predicate: (query) => query.queryKey[0] !== sessionQueryKey[0] })
+  queryClient.setQueryData(sessionQueryKey, null)
+}
+
+// Retry once, and only when trying again could help: the server was unreachable or failed.
+// A 4xx (unauthenticated, validation, not found) gets the same answer the second time.
+export function shouldRetry(failureCount: number, error: unknown): boolean {
+  return failureCount < 1 && error instanceof ApiError && (error.status === 0 || error.status >= 500)
+}
+
+export function createQueryClient({ retry = true }: { retry?: boolean } = {}): QueryClient {
+  const queryClient: QueryClient = new QueryClient({
+    queryCache: new QueryCache({
+      onError: (error, query) => handleUnauthenticated(queryClient, error, query.meta),
+    }),
+    mutationCache: new MutationCache({
+      onError: (error, _variables, _onMutateResult, mutation) => handleUnauthenticated(queryClient, error, mutation.meta),
+    }),
     defaultOptions: {
-      // Retry once instead of three times, so stub and API errors show up quickly.
-      queries: { retry: 1 },
+      queries: { retry: retry ? shouldRetry : false },
     },
   })
+  return queryClient
 }

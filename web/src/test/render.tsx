@@ -1,7 +1,8 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider, type QueryClient } from '@tanstack/react-query'
 import { render, type RenderResult } from '@testing-library/react'
 import type { ReactElement } from 'react'
 import { MemoryRouter } from 'react-router'
+import { createQueryClient } from '../queryClient.ts'
 import { ThemeProvider } from '../theme/ThemeProvider.tsx'
 
 interface RenderOptions {
@@ -10,14 +11,12 @@ interface RenderOptions {
 }
 
 // Renders inside the app's providers and an in-memory router, with a fresh query client per test so
-// cached data never leaks between tests. Retries are off so error states appear immediately.
+// cached data never leaks between tests. Same 401 handling as the app; retries are off so error states appear immediately.
 export function renderWithProviders(
   ui: ReactElement,
   { route = '/' }: RenderOptions = {},
 ): RenderResult & { queryClient: QueryClient } {
-  const queryClient = new QueryClient({
-    defaultOptions: { queries: { retry: false } },
-  })
+  const queryClient = createQueryClient({ retry: false })
   const result = render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
