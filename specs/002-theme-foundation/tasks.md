@@ -25,7 +25,7 @@ Each task ends with a local commit naming the feature and task (for example `002
 ## Phase 4: User Story — Style once, get every theme (scenarios 1, 6)
 
 - [x] [T010] Create `web/src/components/icons.tsx` (back chevron, menu, journal, eye-off, arrow-up, check; inline SVG, `currentColor`, `aria-hidden`) and `web/src/components/Button.tsx` (`variant: 'primary' | 'secondary'`, theme utilities only). (FR-5, FR-6)
-- [ ] [T011] Create `web/src/components/ornaments/Emblem.tsx`, `DiamondRule.tsx` and `CornerBrackets.tsx`: inline SVG redrawn from `web/design/general-sign-in-title-screen.png`, `stroke="currentColor"`, colored with `text-accent` / `text-border-accent`, `aria-hidden="true"`, `focusable="false"`, scaled by `viewBox`. (FR-15)
+- [x] [T011] Create `web/src/components/ornaments/Emblem.tsx`, `DiamondRule.tsx` and `CornerBrackets.tsx`: inline SVG redrawn from `web/design/general-sign-in-title-screen.png`, `stroke="currentColor"`, colored with `text-accent` / `text-border-accent`, `aria-hidden="true"`, `focusable="false"`, scaled by `viewBox`. (FR-15)
 - [ ] [T012] Create `web/src/styles/noRawValues.test.ts`: load every `.tsx` under `src/` via `import.meta.glob` with `?raw` and fail, naming the file, on hex colors, `rgb(`, `hsl(`, `Spectral`, `Cinzel` or `IBM Plex`. (FR-6, SC-4)
 
 ## Phase 5: User Story — Switch themes and compare with the mocks (scenarios 2, 6)
