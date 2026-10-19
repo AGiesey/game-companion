@@ -3,6 +3,7 @@ import { CreateAccountPage } from './account/CreateAccountPage.tsx'
 import { ForgotPasswordPage } from './account/ForgotPasswordPage.tsx'
 import { RequireSession } from './account/RequireSession.tsx'
 import { RequireSignedOut } from './account/RequireSignedOut.tsx'
+import { ResetPasswordPage } from './account/ResetPasswordPage.tsx'
 import { SignInPage } from './account/SignInPage.tsx'
 import { HomePage } from './home/HomePage.tsx'
 import { NotFoundPage } from './NotFoundPage.tsx'
@@ -17,6 +18,7 @@ function App() {
           <Route path="/create-account" element={<CreateAccountPage />} />
         </Route>
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route element={<RequireSession />}>
           <Route path="/" element={<HomePage />} />
         </Route>
