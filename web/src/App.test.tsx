@@ -1,32 +1,27 @@
 import { screen } from '@testing-library/react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App.tsx'
-import { ApiError } from './api/client.ts'
 import { getPing } from './api/ping.ts'
 import { renderWithProviders } from './test/render.tsx'
 
 vi.mock('./api/ping.ts')
 
-afterEach(() => {
-  vi.mocked(getPing).mockReset()
+beforeEach(() => {
+  vi.mocked(getPing).mockResolvedValue({ message: 'pong', serverTime: '2026-10-18T19:00:00Z' })
 })
 
-describe('App', () => {
-  it('shows a loading message, then the ping result', async () => {
-    vi.mocked(getPing).mockResolvedValue({ message: 'pong', serverTime: '2026-10-18T19:00:00Z' })
+describe('App routes', () => {
+  it('serves the theme preview at /preview in development', async () => {
+    renderWithProviders(<App />, { route: '/preview' })
 
-    renderWithProviders(<App />)
-
-    expect(screen.getByText('Pinging API…')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Theme preview' })).toBeInTheDocument()
     expect(await screen.findByText('pong')).toBeInTheDocument()
-    expect(screen.getByText(/2026-10-18T19:00:00Z/)).toBeInTheDocument()
   })
 
-  it('shows an alert when the ping fails', async () => {
-    vi.mocked(getPing).mockRejectedValue(new ApiError(503, 'Request failed (503)'))
+  it('shows not found for unknown addresses', () => {
+    renderWithProviders(<App />, { route: '/no-such-page' })
 
-    renderWithProviders(<App />)
-
-    expect(await screen.findByRole('alert')).toHaveTextContent('API unreachable: Request failed (503)')
+    expect(screen.getByRole('heading', { name: 'Page not found' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Go home' })).toHaveAttribute('href', '/')
   })
 })
