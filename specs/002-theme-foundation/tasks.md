@@ -38,7 +38,7 @@ Each task ends with a local commit naming the feature and task (for example `002
 ## Phase 6: Polish and verification
 
 - [x] [T017] Verify: `npm run build`, `npm run lint`, `npm test` pass (SC-1–SC-4); built CSS contains rules for both `[data-theme='elden-ring']` and `:root`; `git status` shows changes only under `web/` and `specs/002-theme-foundation/` (SC-9). With `npm run build && npm run preview` in a browser: switching changes the page background (SC-5); Elden Ring survives a reload with no General flash (SC-6); with site data blocked the page loads in General and switching works (SC-7). Fix anything that fails.
-- [ ] [T018] Manual check for the developer (SC-8): compare the preview with the mocks in `web/design/` in both themes (colors, fonts, case, structure, ornaments). Report as a step for the developer to confirm.
+- [x] [T018] Manual check for the developer (SC-8): compare the preview with the mocks in `web/design/` in both themes (colors, fonts, case, structure, ornaments). Report as a step for the developer to confirm.
 
 ## Dependencies
 
