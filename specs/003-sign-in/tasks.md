@@ -39,7 +39,7 @@ Each task ends with a local commit naming the feature and task (for example `003
 
 ## Phase 7: User Story — Forgot and reset password (scenarios 5, 6)
 
-- [ ] [T016] Create `web/src/account/ForgotPasswordPage.tsx` and its test: submitting shows the same confirmation for a known and an unknown email; validation for empty or malformed email; "Back to sign in" link. (FR-10, SC-3)
+- [x] [T016] Create `web/src/account/ForgotPasswordPage.tsx` and its test: submitting shows the same confirmation for a known and an unknown email; validation for empty or malformed email; "Back to sign in" link. (FR-10, SC-3)
 - [ ] [T017] Create `web/src/account/ResetPasswordPage.tsx` and its test: reads `token` and `email` from the query string; success shows the changed message with a sign-in link; invalid token and missing token or email show the explanation with a link to `/forgot-password`; mismatched passwords caught client-side. (FR-11, SC-3)
 
 ## Phase 8: Polish and verification
