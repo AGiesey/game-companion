@@ -6,7 +6,7 @@ Each task ends with a local commit naming the feature and task (for example `002
 
 ## Phase 1: Setup
 
-- [ ] [T001] Create `web/src/theme/themes.ts`: the `themes` registry (`general` / General, `elden-ring` / Elden Ring) `as const`, `ThemeId` derived from it, `isThemeId(value: unknown): value is ThemeId`, and `defaultThemeId = 'general'`. Create `web/src/theme/tokens.ts` exporting the 19 color token names, the other per-theme variables (`font-display`, `font-body`, `tagline-style`) and the FR-4 contrast pairs as data. (FR-1, FR-4, FR-9)
+- [x] [T001] Create `web/src/theme/themes.ts`: the `themes` registry (`general` / General, `elden-ring` / Elden Ring) `as const`, `ThemeId` derived from it, `isThemeId(value: unknown): value is ThemeId`, and `defaultThemeId = 'general'`. Create `web/src/theme/tokens.ts` exporting the 19 color token names, the other per-theme variables (`font-display`, `font-body`, `tagline-style`) and the FR-4 contrast pairs as data. (FR-1, FR-4, FR-9)
 
 ## Phase 2: Foundational — tokens and Tailwind
 
