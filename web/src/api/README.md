@@ -50,6 +50,13 @@ export function getRunJournal(runId: string, { signal }: RequestOptions = {}): P
 - For streams, use `stubStream(chunks, { signal })`, an async generator that yields each chunk after a short delay.
 - Stubs wait 400 ms (40 ms per stream chunk) so loading states are visible. Tests call `setStubDelays({ valueMs: 0, chunkMs: 0 })`.
 
+### Stubs with state
+
+Some needs only make sense with state behind them. Those stubs delegate to a small fake server in `stubs/`, which only the matching API file imports (components never do):
+
+- **`stubs/accountStub.ts`**, used by `account.ts`. Demo account: `vaela@example.com` / `stub-password`. Demo reset link: `/reset-password?email=vaela@example.com&token=stub-reset-token`. New accounts need a password of at least 8 characters (a stand-in rule; the real rules are the backend's).
+- Stub state lives in browser storage under keys starting `game-companion.stub.`. Clear those keys (or all site data) to start fresh.
+
 ## Replacing a stub
 
 When the endpoint exists:
