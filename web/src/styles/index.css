@@ -1,3 +1,76 @@
 /* Global stylesheet, imported once from main.tsx. */
 @import 'tailwindcss';
 @import './fonts.css';
+
+/*
+ * Theme variables (--theme-*). General must come first: its :root rule has the same specificity
+ * as each [data-theme] rule, so later themes override it when their attribute is set.
+ */
+@import './themes/general.css';
+@import './themes/elden-ring.css';
+
+/*
+ * Tailwind tokens that point at the active theme. `inline` makes utilities use var(--theme-*)
+ * directly, so they follow data-theme at runtime. Clearing --color-* removes Tailwind's default
+ * palette: only theme colors exist.
+ */
+@theme inline {
+  --color-*: initial;
+  --color-bg: var(--theme-bg);
+  --color-bg-chrome: var(--theme-bg-chrome);
+  --color-backdrop: var(--theme-backdrop);
+  --color-surface: var(--theme-surface);
+  --color-surface-input: var(--theme-surface-input);
+  --color-surface-sheet: var(--theme-surface-sheet);
+  --color-surface-card: var(--theme-surface-card);
+  --color-surface-callout: var(--theme-surface-callout);
+  --color-border: var(--theme-border);
+  --color-border-subtle: var(--theme-border-subtle);
+  --color-border-list: var(--theme-border-list);
+  --color-border-accent: var(--theme-border-accent);
+  --color-text: var(--theme-text);
+  --color-text-strong: var(--theme-text-strong);
+  --color-text-muted: var(--theme-text-muted);
+  --color-text-faint: var(--theme-text-faint);
+  --color-accent: var(--theme-accent);
+  --color-accent-bright: var(--theme-accent-bright);
+  --color-on-accent: var(--theme-on-accent);
+
+  --font-sans: var(--theme-font-body);
+  --font-display: var(--theme-font-display);
+}
+
+/* Shared by every theme (web/design/README.md, Shape and Typography). */
+@theme {
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.4;
+}
+
+/* Uppercase, letter-spaced labels: date label, card labels, stat names, section eyebrows. */
+@utility label-caps {
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* The tagline under the app title. Italic where the display font has an italic. */
+@utility tagline {
+  font-family: var(--theme-font-display);
+  font-style: var(--theme-tagline-style);
+}
+
+@layer base {
+  body {
+    @apply bg-bg font-sans text-body text-text;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--theme-accent);
+    outline-offset: 2px;
+  }
+}
