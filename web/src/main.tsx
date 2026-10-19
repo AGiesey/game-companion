@@ -4,13 +4,16 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import { createQueryClient } from './queryClient.ts'
 import './styles/index.css'
+import { ThemeProvider } from './theme/ThemeProvider.tsx'
 
 const queryClient = createQueryClient()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>,
 )
