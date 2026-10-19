@@ -22,5 +22,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
+    // Theme CSS is read as text by the token tests; Vitest blanks CSS it doesn't process.
+    css: { include: [/styles\/themes\/.+\.css/] },
   },
 })
