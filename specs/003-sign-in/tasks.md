@@ -20,7 +20,7 @@ Each task ends with a local commit naming the feature and task (for example `003
 ## Phase 3: User Story — Routing and protection (scenarios 8, 9)
 
 - [x] [T008] Create `web/src/components/FullPageLoading.tsx` (`role="status"`), `web/src/account/RequireSession.tsx`, `web/src/account/RequireSignedOut.tsx`, `web/src/NotFoundPage.tsx` and a placeholder `web/src/home/HomePage.tsx` (welcome line with email). Rewrite `web/src/App.tsx` as the route table from the plan (preview under `import.meta.env.DEV`); add `<BrowserRouter>` in `web/src/main.tsx`. Move the ping tests to `web/src/preview/ApiStatus.test.tsx`; rewrite `web/src/App.test.tsx` for `/preview` and not-found. (FR-1, FR-4)
-- [ ] [T009] Create `web/src/account/routing.test.tsx`: signed-out on `/` → sign-in with no `returnTo`; signed-out on `/somewhere?x=1` → sign-in with encoded `returnTo`; signed-in on `/sign-in` → home, and → `returnTo` when safe, → home when unsafe; loading state shown while the session is pending and no sign-in content flashes. (FR-2, FR-3, FR-4, SC-3)
+- [x] [T009] Create `web/src/account/routing.test.tsx`: signed-out on `/` → sign-in with no `returnTo`; signed-out on `/somewhere?x=1` → sign-in with encoded `returnTo`; signed-in on `/sign-in` → home, and → `returnTo` when safe, → home when unsafe; loading state shown while the session is pending and no sign-in content flashes. (FR-2, FR-3, FR-4, SC-3)
 
 ## Phase 4: User Story — Sign in (scenarios 1, 2, 7)
 
