@@ -2,11 +2,13 @@
 
 const basePath = '/api'
 
-interface ProblemDetails {
+export interface ProblemDetails {
   type?: string
   title?: string
   status?: number
   detail?: string
+  // Field validation errors (ValidationProblemDetails), keyed by field name.
+  errors?: Record<string, string[]>
 }
 
 // A failed API call. status is 0 when the server couldn't be reached.
@@ -15,6 +17,7 @@ export class ApiError extends Error {
   readonly title?: string
   readonly detail?: string
   readonly type?: string
+  readonly errors?: Record<string, string[]>
 
   constructor(status: number, message: string, problem?: ProblemDetails) {
     super(message)
@@ -23,6 +26,7 @@ export class ApiError extends Error {
     this.title = problem?.title
     this.detail = problem?.detail
     this.type = problem?.type
+    this.errors = problem?.errors
   }
 }
 

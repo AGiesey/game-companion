@@ -46,6 +46,24 @@ describe('apiGet', () => {
     expect(error.message).toBe('Run not found')
   })
 
+  it('carries field errors from a validation ProblemDetails', async () => {
+    fetchMock.mockResolvedValue(
+      jsonResponse(
+        {
+          title: 'One or more validation errors occurred.',
+          status: 400,
+          errors: { Email: ['Email is already in use.'], Password: ['Too short.', 'Needs a digit.'] },
+        },
+        400,
+        'application/problem+json',
+      ),
+    )
+
+    const error = await catchApiError(apiGet('/accounts'))
+    expect(error.status).toBe(400)
+    expect(error.errors).toEqual({ Email: ['Email is already in use.'], Password: ['Too short.', 'Needs a digit.'] })
+  })
+
   it('throws an ApiError with a generic message when the error body is not ProblemDetails', async () => {
     fetchMock.mockResolvedValue(new Response('Bad gateway', { status: 502, headers: { 'Content-Type': 'text/plain' } }))
 
