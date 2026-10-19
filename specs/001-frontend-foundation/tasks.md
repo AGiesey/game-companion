@@ -34,7 +34,7 @@ Each task ends with a local commit naming the feature and task (for example `001
 ## Phase 6: Polish and verification
 
 - [x] [T013] Verify success criteria: `npm run build`, `npm run lint` and `npm test` pass (SC-1); the built CSS in `web/dist/assets/` contains the rule for the Tailwind class used in `App.tsx` (SC-2); temporarily break the expected ping message to confirm `npm test` fails, then restore (SC-3); `fetch(` appears under `web/src` only in `web/src/api/client.ts` (SC-4); `git status` shows changes only under `web/` and `specs/001-frontend-foundation/` (SC-6). Fix anything that fails.
-- [ ] [T014] Manual check for the developer (SC-5): with `aspire run`, the page shows the API's ping message; with the API stopped, the error alert appears. Not automated; report as a step for the developer to confirm.
+- [x] [T014] Manual check for the developer (SC-5): with `aspire run`, the page shows the API's ping message; with the API stopped, the error alert appears. Not automated; report as a step for the developer to confirm.
 
 ## Dependencies
 
