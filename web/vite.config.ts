@@ -24,5 +24,8 @@ export default defineConfig({
     include: ['src/**/*.test.{ts,tsx}'],
     // Theme CSS is read as text by the token tests; Vitest blanks CSS it doesn't process.
     css: { include: [/styles\/themes\/.+\.css/] },
+    // The on-disk module cache stores import.meta.glob results, so noRawValues.test.ts wouldn't see new
+    // component files until the cache was cleared. The suite is small; correctness wins over cold-start speed.
+    fsModuleCache: false,
   },
 })
