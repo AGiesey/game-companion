@@ -1,10 +1,9 @@
-import { ApiStatus } from './preview/ApiStatus.tsx'
+import { ThemePreview } from './preview/ThemePreview.tsx'
 
 function App() {
   return (
-    <main className="p-4">
-      <h1>Game Companion</h1>
-      <ApiStatus />
+    <main>
+      <ThemePreview />
     </main>
   )
 }
