@@ -31,7 +31,7 @@ Each task ends with a local commit naming the feature and task (for example `003
 
 ## Phase 5: User Story — Create account (scenarios 3, 4)
 
-- [ ] [T014] Create `web/src/account/CreateAccountPage.tsx` (Email, Password, Confirm password, "Create account" / "Creating account…", "Already have an account? Sign in") and `web/src/account/CreateAccountPage.test.tsx`: success signs in and lands on home; mismatched passwords caught without calling the API; email-in-use and short password errors appear under their fields; focus to first error. (FR-9, SC-3, SC-4)
+- [x] [T014] Create `web/src/account/CreateAccountPage.tsx` (Email, Password, Confirm password, "Create account" / "Creating account…", "Already have an account? Sign in") and `web/src/account/CreateAccountPage.test.tsx`: success signs in and lands on home; mismatched passwords caught without calling the API; email-in-use and short password errors appear under their fields; focus to first error. (FR-9, SC-3, SC-4)
 
 ## Phase 6: User Story — Sign out and session end (scenarios 10, 11)
 

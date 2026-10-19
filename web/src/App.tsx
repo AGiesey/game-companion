@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router'
+import { CreateAccountPage } from './account/CreateAccountPage.tsx'
 import { RequireSession } from './account/RequireSession.tsx'
 import { RequireSignedOut } from './account/RequireSignedOut.tsx'
 import { SignInPage } from './account/SignInPage.tsx'
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route element={<RequireSignedOut />}>
           <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/create-account" element={<CreateAccountPage />} />
         </Route>
         <Route element={<RequireSession />}>
           <Route path="/" element={<HomePage />} />
