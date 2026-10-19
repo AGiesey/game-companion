@@ -1,0 +1,33 @@
+/*
+ * General theme. Values from web/design/README.md (Design tokens).
+ * Colors are 6-digit hex so the token and contrast tests can read them.
+ * Also applies at :root, so it's the fallback when no theme or an unknown theme is set.
+ */
+:root,
+[data-theme='general'] {
+  --theme-bg: #1c1916;
+  --theme-bg-chrome: #221e1a;
+  /* provisional: darkest tone of the General sign-in background (web/design/README.md TBD) */
+  --theme-backdrop: #141210;
+  --theme-surface: #2e2924;
+  --theme-surface-input: #2b2621;
+  /* provisional: General run panel isn't mocked; uses surface-card (web/design/README.md TBD) */
+  --theme-surface-sheet: #221e19;
+  --theme-surface-card: #221e19;
+  --theme-surface-callout: #1c1916;
+  --theme-border: #423a32;
+  --theme-border-subtle: #36302a;
+  --theme-border-list: #36302a;
+  --theme-border-accent: #5a4b37;
+  --theme-text: #e8dfcc;
+  --theme-text-strong: #efe6d3;
+  --theme-text-muted: #a69b87;
+  --theme-text-faint: #8c8270;
+  --theme-accent: #b89462;
+  --theme-accent-bright: #d0ae7a;
+  --theme-on-accent: #1c1916;
+
+  --theme-font-display: 'Spectral', Georgia, serif;
+  --theme-font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --theme-tagline-style: italic;
+}

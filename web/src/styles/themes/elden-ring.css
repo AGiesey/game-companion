@@ -1,0 +1,32 @@
+/*
+ * Elden Ring theme. Values from web/design/README.md (Design tokens).
+ * Colors are 6-digit hex so the token and contrast tests can read them.
+ */
+[data-theme='elden-ring'] {
+  --theme-bg: #12110d;
+  --theme-bg-chrome: #191710;
+  --theme-backdrop: #0a0806;
+  --theme-surface: #2a261c;
+  --theme-surface-input: #24211a;
+  --theme-surface-sheet: #1a1811;
+  --theme-surface-card: #221f17;
+  --theme-surface-callout: #1c1910;
+  --theme-border: #3f382a;
+  --theme-border-subtle: #3a3426;
+  --theme-border-list: #2e2a20;
+  --theme-border-accent: #5a4a26;
+  --theme-text: #e6dcc3;
+  --theme-text-strong: #ede3ca;
+  --theme-text-muted: #a79c82;
+  --theme-text-faint: #8e8470;
+  --theme-accent: #c9a44c;
+  /* provisional: not mocked for Elden Ring; uses accent (web/design/README.md TBD) */
+  --theme-accent-bright: #c9a44c;
+  --theme-on-accent: #12110d;
+
+  /* Cinzel has no lowercase: lowercase letters render as small caps. */
+  --theme-font-display: 'Cinzel', Georgia, serif;
+  --theme-font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  /* Cinzel has no italic. */
+  --theme-tagline-style: normal;
+}
