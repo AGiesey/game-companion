@@ -25,7 +25,7 @@ Each task ends with a local commit naming the feature and task (for example `003
 ## Phase 4: User Story — Sign in (scenarios 1, 2, 7)
 
 - [x] [T010] Create `web/src/components/TextField.tsx` and `web/src/components/FormError.tsx`; create `web/src/account/validation.ts` (+ `validation.test.ts`) and `web/src/account/formErrors.ts` (`fieldErrorsFrom`, + `formErrors.test.ts`, including case-insensitive keys and unmatched keys). (FR-14, FR-15, FR-17)
-- [ ] [T011] Create `web/src/account/AccountLayout.tsx` from the sign-in section of `ThemePreview`, and make `web/src/preview/ThemePreview.tsx` render its sign-in section through it. (FR-8, FR-13)
+- [x] [T011] Create `web/src/account/AccountLayout.tsx` from the sign-in section of `ThemePreview`, and make `web/src/preview/ThemePreview.tsx` render its sign-in section through it. (FR-8, FR-13)
 - [ ] [T012] Create `web/src/account/SignInPage.tsx`: fields, remember checkbox (checked), Enter with "Entering…", forgot and create links, client validation, `signIn` mutation with `meta.expectsUnauthenticated`, success sets the session, 401 → "Email or password is incorrect." with the password cleared and focused, other errors per FR-15, focus to first error. (FR-8, FR-14–FR-17)
 - [ ] [T013] Create `web/src/account/SignInPage.test.tsx`: success lands on home (and on `returnTo`); wrong password shows the message, keeps the email, clears and focuses the password; empty fields show linked errors (`toHaveAccessibleDescription`) and focus the first; network error shows the network message; button disabled while submitting. (SC-3, SC-4)
 

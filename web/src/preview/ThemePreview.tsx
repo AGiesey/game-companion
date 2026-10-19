@@ -1,9 +1,7 @@
 import { useId, type ReactNode } from 'react'
+import { AccountLayout } from '../account/AccountLayout.tsx'
 import { Button } from '../components/Button.tsx'
 import { ArrowUpIcon, BackIcon, EyeOffIcon, JournalIcon, MenuIcon } from '../components/icons.tsx'
-import { CornerBrackets } from '../components/ornaments/CornerBrackets.tsx'
-import { DiamondRule } from '../components/ornaments/DiamondRule.tsx'
-import { Emblem } from '../components/ornaments/Emblem.tsx'
 import { ApiStatus } from './ApiStatus.tsx'
 import { ThemeSwitcher } from './ThemeSwitcher.tsx'
 
@@ -256,20 +254,20 @@ function SignIn() {
   const rememberId = useId()
 
   return (
-    <div className="-mx-4 flex flex-col items-center gap-4 bg-radial from-surface-card to-bg px-4 py-10 text-center">
-      <Emblem className="size-24" />
-      <p className="label-caps tracking-[0.3em] text-text-muted">Your journey continues</p>
-      <h3 className="font-display text-4xl font-semibold text-text-strong">Game Companion</h3>
-      <DiamondRule className="w-2/3" />
-      <p className="tagline text-xl text-text-muted">A friend who’s played it, along for your run.</p>
-
-      <form
-        className="relative mt-4 flex w-full flex-col gap-5 border border-border-accent bg-surface-card p-6 text-left"
-        onSubmit={(event) => event.preventDefault()}
-      >
-        <CornerBrackets />
-        <h4 className="text-center font-display text-2xl font-semibold text-text-strong">Sign in</h4>
-
+    <AccountLayout
+      fullPage={false}
+      eyebrow="Your journey continues"
+      cardTitle="Sign in"
+      footer={
+        <>
+          New here?{' '}
+          <a href="#create-account" className="font-semibold text-accent-bright underline">
+            Begin a new journey
+          </a>
+        </>
+      }
+    >
+      <form className="flex flex-col gap-5" onSubmit={(event) => event.preventDefault()}>
         <div className="flex flex-col gap-2">
           <label htmlFor={emailId} className="label-caps text-text-muted">
             Email
@@ -303,13 +301,6 @@ function SignIn() {
           Forgot password?
         </a>
       </form>
-
-      <p className="text-text-muted">
-        New here?{' '}
-        <a href="#create-account" className="font-semibold text-accent-bright underline">
-          Begin a new journey
-        </a>
-      </p>
-    </div>
+    </AccountLayout>
   )
 }
