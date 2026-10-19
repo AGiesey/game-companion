@@ -35,7 +35,7 @@ Each task ends with a local commit naming the feature and task (for example `003
 
 ## Phase 6: User Story — Sign out and session end (scenarios 10, 11)
 
-- [ ] [T015] Add **Sign out** to `web/src/home/HomePage.tsx` using `useSignOut`; create `web/src/home/HomePage.test.tsx`: shows the email; signing out lands on sign-in and the session is `null`; signing out still lands on sign-in when the API call fails. Add to `web/src/account/routing.test.tsx`: a `401` from an unrelated query while on home sends the player to sign-in with `returnTo`. (FR-6, FR-7, FR-12, SC-3)
+- [x] [T015] Add **Sign out** to `web/src/home/HomePage.tsx` using `useSignOut`; create `web/src/home/HomePage.test.tsx`: shows the email; signing out lands on sign-in and the session is `null`; signing out still lands on sign-in when the API call fails. Add to `web/src/account/routing.test.tsx`: a `401` from an unrelated query while on home sends the player to sign-in with `returnTo`. (FR-6, FR-7, FR-12, SC-3)
 
 ## Phase 7: User Story — Forgot and reset password (scenarios 5, 6)
 

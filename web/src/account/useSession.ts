@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { getSession, signOut } from '../api/account.ts'
+import { endSession } from '../queryClient.ts'
 import { sessionQueryKey } from './sessionQueryKey.ts'
 
 export { sessionQueryKey }
@@ -19,9 +20,6 @@ export function useSignOut() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: signOut,
-    onSettled: () => {
-      queryClient.removeQueries()
-      queryClient.setQueryData(sessionQueryKey, null)
-    },
+    onSettled: () => endSession(queryClient),
   })
 }

@@ -15,12 +15,17 @@ declare module '@tanstack/react-query' {
   }
 }
 
-// A 401 means the session has ended: drop everything cached for it and mark nobody signed in.
-// RequireSession then sends the player to sign-in, remembering where they were.
-export function handleUnauthenticated(queryClient: QueryClient, error: unknown, meta: AppMeta | undefined): void {
-  if (!(error instanceof ApiError) || error.status !== 401 || meta?.expectsUnauthenticated) return
+// Forget everything cached for the session and mark nobody signed in. The session query itself is updated,
+// not removed: components watching it would stay attached to a removed query and never see the change.
+export function endSession(queryClient: QueryClient): void {
   queryClient.removeQueries({ predicate: (query) => query.queryKey[0] !== sessionQueryKey[0] })
   queryClient.setQueryData(sessionQueryKey, null)
+}
+
+// A 401 means the session has ended. RequireSession then sends the player to sign-in, remembering where they were.
+export function handleUnauthenticated(queryClient: QueryClient, error: unknown, meta: AppMeta | undefined): void {
+  if (!(error instanceof ApiError) || error.status !== 401 || meta?.expectsUnauthenticated) return
+  endSession(queryClient)
 }
 
 // Retry once, and only when trying again could help: the server was unreachable or failed.

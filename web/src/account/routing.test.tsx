@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react'
 import { useLocation } from 'react-router'
 import { afterEach, describe, expect, it } from 'vitest'
 import App from '../App.tsx'
+import { ApiError } from '../api/client.ts'
 import { setStubDelays } from '../api/stub.ts'
 import { demoAccount, signIn } from '../api/stubs/accountStub.ts'
 import { renderWithProviders } from '../test/render.tsx'
@@ -54,6 +55,21 @@ describe('protected routes', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Loading…')
     expect(screen.queryByRole('heading', { name: 'Sign in' })).not.toBeInTheDocument()
     expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument()
+  })
+})
+
+describe('session ending', () => {
+  it('sends the player to sign-in when an unrelated request gets a 401', async () => {
+    await signInDemo()
+    const { queryClient } = renderApp('/')
+    await screen.findByText(`Signed in as ${demoAccount.email}`)
+
+    await queryClient
+      .fetchQuery({ queryKey: ['journal'], queryFn: () => Promise.reject(new ApiError(401, 'Unauthorized')) })
+      .catch(() => {})
+
+    expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument()
+    expect(currentLocation()).toBe('/sign-in')
   })
 })
 
