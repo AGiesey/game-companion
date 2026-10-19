@@ -4,12 +4,15 @@ import { ForgotPasswordPage } from './account/ForgotPasswordPage.tsx'
 import { RequireSession } from './account/RequireSession.tsx'
 import { RequireSignedOut } from './account/RequireSignedOut.tsx'
 import { ResetPasswordPage } from './account/ResetPasswordPage.tsx'
+import { useRecheckSessionOnRestore } from './account/useSession.ts'
 import { SignInPage } from './account/SignInPage.tsx'
 import { HomePage } from './home/HomePage.tsx'
 import { NotFoundPage } from './NotFoundPage.tsx'
 import { ThemePreview } from './preview/ThemePreview.tsx'
 
 function App() {
+  useRecheckSessionOnRestore()
+
   return (
     <main>
       <Routes>

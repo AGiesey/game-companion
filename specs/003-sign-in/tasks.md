@@ -44,7 +44,7 @@ Each task ends with a local commit naming the feature and task (for example `003
 
 ## Phase 8: Polish and verification
 
-- [ ] [T018] Verify: `npm run build`, `npm run lint`, `npm test` pass (SC-1); `fetch(` only in `web/src/api/client.ts` and `game-companion.stub.` only under `web/src/api/stubs/` (SC-6); `specs/backend-needs.md` has seven `stubbed` entries with functions (SC-5); the production build contains no `ThemePreview` code; `git status` shows changes only under `web/` and `specs/` (SC-8). In a browser (headless Chrome if needed) against the dev or preview server: run scenarios 1–11 (SC-2). Fix anything that fails.
+- [x] [T018] Verify: `npm run build`, `npm run lint`, `npm test` pass (SC-1); `fetch(` only in `web/src/api/client.ts` and `game-companion.stub.` only under `web/src/api/stubs/` (SC-6); `specs/backend-needs.md` has seven `stubbed` entries with functions (SC-5); the production build contains no `ThemePreview` code; `git status` shows changes only under `web/` and `specs/` (SC-8). In a browser (headless Chrome if needed) against the dev or preview server: run scenarios 1–11 (SC-2). Fix anything that fails.
 - [ ] [T019] Manual check for the developer (SC-7): compare `/sign-in` with `web/design/general-sign-in-title-screen.png` in both themes, and try the flows with the demo account. Report as a step for the developer to confirm.
 
 ## Dependencies

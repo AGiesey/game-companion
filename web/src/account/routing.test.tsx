@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it } from 'vitest'
 import App from '../App.tsx'
 import { ApiError } from '../api/client.ts'
 import { setStubDelays } from '../api/stub.ts'
-import { demoAccount, signIn } from '../api/stubs/accountStub.ts'
+import { demoAccount, signIn, signOut } from '../api/stubs/accountStub.ts'
 import { renderWithProviders } from '../test/render.tsx'
 
 // Shows the router's current address so tests can check where a redirect went.
@@ -70,6 +70,23 @@ describe('session ending', () => {
 
     expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument()
     expect(currentLocation()).toBe('/sign-in')
+  })
+})
+
+describe('back/forward cache', () => {
+  it('rechecks the session when the browser restores a page from before signing out', async () => {
+    await signInDemo()
+    renderApp('/')
+    await screen.findByText(`Signed in as ${demoAccount.email}`)
+
+    // Signed out since this page was cached; then the browser restores it.
+    await signOut()
+    const restore = new Event('pageshow')
+    Object.defineProperty(restore, 'persisted', { value: true })
+    window.dispatchEvent(restore)
+
+    expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument()
+    expect(screen.queryByText(/Signed in as/)).not.toBeInTheDocument()
   })
 })
 
