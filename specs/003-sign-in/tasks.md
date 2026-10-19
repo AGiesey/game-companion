@@ -6,7 +6,7 @@ Each task ends with a local commit naming the feature and task (for example `003
 
 ## Phase 1: Setup
 
-- [ ] [T001] Install `react-router` (runtime) in `web/package.json`; confirm `npm run build` passes.
+- [x] [T001] Install `react-router` (runtime) in `web/package.json`; confirm `npm run build` passes.
 - [ ] [T002] Update test plumbing: `web/src/test/setup.ts` also clears `sessionStorage` and sets stub delays to 0 before all tests; `web/src/test/render.tsx` `renderWithProviders(ui, { route })` wraps in a `MemoryRouter` with `initialEntries` and returns `queryClient`. Existing tests still pass.
 
 ## Phase 2: Foundational — API, session and query client
