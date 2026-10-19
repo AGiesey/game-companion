@@ -63,7 +63,8 @@ Components use semantic tokens only, never raw colors or font names. Each theme 
 | `surface-card` | Stat tiles, sign-in card | `#221e19` | `#221f17` |
 | `surface-callout` | Inline cards | `#1c1916` | `#1c1910` |
 | `border` | Bubbles, inputs, secondary buttons | `#423a32` | `#3f382a` |
-| `border-subtle` | Dividers, list rules | `#36302a` | `#3a3426` (lists `#2e2a20`) |
+| `border-subtle` | Dividers, tab rule, stat tiles | `#36302a` | `#3a3426` |
+| `border-list` | Rules between list rows | `#36302a` | `#2e2a20` |
 | `border-accent` | Inline cards, highlighted stat, sign-in card | `#5a4b37` | `#5a4a26` |
 | `text` | Body text | `#e8dfcc` | `#e6dcc3` |
 | `text-strong` | Titles, character name | `#efe6d3` | `#ede3ca` |
@@ -117,7 +118,7 @@ Switching is instant: no reload, no flash of the wrong theme. Any color transiti
 - Fonts are self-hosted from `web/src/assets/fonts/` with `@font-face`. Browsers only download a face when it's used, so a theme's fonts cost nothing until that theme is active.
 - An unknown or removed theme id falls back to the user's default, then General.
 
-**Accessibility.** Every theme must keep `text`, `text-muted` and `accent` readable against `bg`, `surface` and `surface-callout`, and `on-accent` readable against `accent`. One to watch: `text-faint` on `bg` is about 4.4:1 in General, just under the 4.5:1 guideline for small text. It's only used for short uppercase labels, but nudging it slightly lighter would clear it.
+**Accessibility.** Every theme must keep `text`, `text-strong`, `text-muted` and `accent` at 4.5:1 or better against `bg`, `bg-chrome`, `surface`, `surface-card` and `surface-callout`, and `on-accent` against `accent`. Both themes pass. `text-faint` passes only on `bg` (3.8–4.45:1 on the raised surfaces), so it's for the page background only, as in the mocks; labels on raised surfaces use `text-muted`.
 
 ## API needs
 
