@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import indexHtml from '../../index.html?raw'
 import { readLastTheme, themeStorageKey, writeLastTheme } from './storage.ts'
 
 afterEach(() => {
@@ -28,5 +29,9 @@ describe('theme storage', () => {
 
     expect(() => writeLastTheme('elden-ring')).not.toThrow()
     expect(readLastTheme()).toBeNull()
+  })
+
+  it('uses the same key as the pre-paint script in index.html', () => {
+    expect(indexHtml).toContain(`localStorage.getItem('${themeStorageKey}')`)
   })
 })
