@@ -103,7 +103,7 @@ Each task ends with a local commit naming the feature and task (for example `004
 
 ## Phase 7: Polish and verification
 
-- [ ] [T021] Verify:
+- [x] [T021] Verify:
   - `npm run build`, `npm run lint` and `npm test` pass (SC-1).
   - `fetch(` appears only in `web/src/api/client.ts`, and `game-companion.stub.runs` only in `web/src/api/stubs/runStub.ts` and tests (SC-7).
   - `specs/backend-needs.md` shows four `stubbed` `004-runs` entries (SC-6).
@@ -111,7 +111,7 @@ Each task ends with a local commit naming the feature and task (for example `004
   - In a browser against the Aspire-hosted app with the real account endpoints, run scenarios 1–10, keyboard only, with focus visible in both themes (SC-2, SC-8). Use headless Chrome if needed.
 
   Fix anything that fails.
-- [ ] [T022] Manual check for the developer: in the browser, switch runs, create a run and watch the switch into Elden Ring. Check that the run list and create screen read well next to the existing mocks in both themes. Report as a step for the developer to confirm.
+- [x] [T022] Manual check for the developer: in the browser, switch runs, create a run and watch the switch into Elden Ring. Check that the run list and create screen read well next to the existing mocks in both themes. Report as a step for the developer to confirm.
 
 ## Dependencies
 
