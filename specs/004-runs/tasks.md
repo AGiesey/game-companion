@@ -32,7 +32,7 @@ Each task ends with a local commit naming the feature and task (for example `004
 
 ## Phase 4: User Story — Run list and switching (scenarios 3, 9, 10)
 
-- [ ] [T011] Create `web/src/runs/formatLastOpened.ts` ("Opened today", "Opened yesterday", "Opened N days ago" up to 6 days, then the medium date; "Started …" when never opened). It takes optional `now` and `locale` parameters. Add `web/src/runs/formatLastOpened.test.ts`, pinned to `en`, covering calendar-day boundaries (late last night versus earlier today) and the 6-to-7-day switch. (FR-8)
+- [x] [T011] Create `web/src/runs/formatLastOpened.ts` ("Opened today", "Opened yesterday", "Opened N days ago" up to 6 days, then the medium date; "Started …" when never opened). It takes optional `now` and `locale` parameters. Add `web/src/runs/formatLastOpened.test.ts`, pinned to `en`, covering calendar-day boundaries (late last night versus earlier today) and the 6-to-7-day switch. (FR-8)
 - [ ] [T012] Build `web/src/runs/RunListPage.tsx` and `web/src/runs/RunListItem.tsx`:
   - `<title>`, `<h1>` "Your runs", and a `<ul>` with `border-list` dividers.
   - Each row is a `Link` labelled by the run's name (`aria-labelledby`), described by the muted line (`aria-describedby`), with a `<time>` element.
