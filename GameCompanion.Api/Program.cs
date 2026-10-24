@@ -1,6 +1,8 @@
 using System.Data.Common;            // DbConnectionStringBuilder
 using GameCompanion.Api.Data;        // AppDbContext, AppUserStore
 using GameCompanion.Api.Models;      // AppUser
+using GameCompanion.Api.Services;    // DevelopmentEmailSender
+using Microsoft.AspNetCore.Identity; // IdentityConstants, IEmailSender
 using Microsoft.Azure.Cosmos;        // ConnectionMode
 using Microsoft.EntityFrameworkCore; // UseCosmos
 
@@ -26,7 +28,21 @@ builder.Services.AddIdentityCore<AppUser>(options =>
 {
     options.User.RequireUniqueEmail = true;
 })
-.AddUserStore<AppUserStore>();
+.AddUserStore<AppUserStore>()
+.AddSignInManager()
+.AddDefaultTokenProviders();
+
+// Signed-in players carry Identity's application cookie. For API endpoints, a missing or expired cookie answers 401
+// rather than redirecting to a sign-in page.
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+    .AddIdentityCookies();
+builder.Services.AddAuthorization();
+
+// Until real email exists, development logs reset links instead of sending them.
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSingleton<IEmailSender<AppUser>, DevelopmentEmailSender>();
+}
 
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddProblemDetails();
@@ -42,6 +58,9 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapDefaultEndpoints();
 app.MapControllers();
