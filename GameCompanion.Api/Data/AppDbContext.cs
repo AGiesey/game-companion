@@ -1,4 +1,3 @@
-
 using GameCompanion.Api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,14 +6,9 @@ namespace GameCompanion.Api.Data;
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<AppUser> Users => Set<AppUser>();
+    public DbSet<Run> Runs => Set<Run>();
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<AppUser>(user =>
-        {
-            user.ToContainer("Users");
-            user.HasPartitionKey(u => u.Id);
-            user.Property(u => u.ConcurrencyStamp).IsETagConcurrency();
-        });
-    }
+    // Each entity's mapping lives in its own IEntityTypeConfiguration<T> class in this folder.
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 }

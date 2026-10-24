@@ -1,7 +1,12 @@
 ## Current goal
-None. Next: the account endpoints (Claude drafts AccountController + SignInManager/cookie auth/token providers; developer reviews), then swap the front end's account stubs.
+The run service (checklist: service): list, create, get and record opened, all scoped to the signed-in user. Then RunsController (Claude drafts or developer writes: developer to say), then swap the runs.ts stubs.
 
 ## Learned / to revisit
+- Games registry: `const` (implicitly static) + `FrozenSet<string>` (.NET 8, System.Collections.Frozen; not an implicit using) via `.ToFrozenSet()`; collection expressions don't build FrozenSet. Default string comparer is ordinal.
+- `sealed` = can't be inherited (Java final class), not immutability; immutability is init/readonly/records. CA1852 only flags internal types.
+- AnalysisLevel latest-recommended: CA1725 (param names match base) is off, so renaming Configure's `builder` is fine.
+- UseETagConcurrency(): shadow _etag, If-Match on save, 412 → DbUpdateConcurrencyException; real property + IsETagConcurrency() if the client must send it back.
+- `required string?`: the creator must set it, even to null (explicit "no theme"). Empty primary ctor `class Run()` adds nothing.
 - Cosmos partitioning: partition key = shard key; point read (id + pk) is cheapest; queries without pk fan out; transactions only within one logical partition; 20 GB per logical partition; hierarchical keys exist.
 - Physical partitions are shards (each a 4-replica set); regions are full copies. Throughput splits evenly across physical partitions → beware hot keys.
 - C# uses `:` not `extends`; redeclaring inherited props hides them (CS0108/CS0114) — only add what's new.
@@ -25,8 +30,9 @@ None. Next: the account endpoints (Claude drafts AccountController + SignInManag
 - The vnext emulator returns the ETag quoted from a create but stores _etag unquoted; If-Match accepts either. Tests compare with quotes trimmed.
 - Store tests run against a real emulator via Aspire.Hosting.Testing (CosmosFixture in GameCompanion.Api.IntegrationTests starts the AppHost without api/web, once per run).
 - To revisit: AppDbContext isn't sealed (optional).
-- To revisit: when a second entity is mapped, move each mapping into its own IEntityTypeConfiguration<T> class in Data/ and use ApplyConfigurationsFromAssembly.
+- Each entity's EF mapping is its own IEntityTypeConfiguration<T> class in Data/; OnModelCreating calls ApplyConfigurationsFromAssembly, which also finds internal classes. (Claude split AppUser's out, 2026-10-24.)
 
 ## Done
+- 2026-10-24: Run entity (sealed class, required/init, nullable ThemeId/LastOpenedAt, MaxNameLength), Games registry, RunConfiguration (Runs, /UserId, shadow ETag), DbSet<Run>, Runs container in the AppHost. Claude split AppUser's mapping into AppUserConfiguration and wrote the Run model tests on request.
 - 2026-10-24: AppUserStore (user, password, email, security stamp, lockout stores) registered with AddIdentityCore; store + UserManager tests against the emulator. Developer wrote IUserStore, password and email groups; Claude wrote Delete, security stamp and lockout bodies, the registration and the tests on request.
 - 2026-10-24: AppUser : IdentityUser mapped to Cosmos (Users container, pk /id, ConcurrencyStamp = _etag), AppDbContext registered, container in AppHost, model tests.

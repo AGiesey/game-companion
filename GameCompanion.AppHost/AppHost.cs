@@ -5,6 +5,7 @@ var cosmos = builder.AddAzureCosmosDB("cosmos")
 
 var database = cosmos.AddCosmosDatabase("gamecompanion");
 database.AddContainer("Users", "/id", "Users");
+database.AddContainer("Runs", "/UserId", "Runs");
 
 var api = builder.AddProject<Projects.GameCompanion_Api>("api")
     .WithReference(database)

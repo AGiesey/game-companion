@@ -13,7 +13,7 @@ public sealed class AppDbContextModelTests
     private const string ConnectionString =
         "AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
 
-    private static IEntityType UserEntityType()
+    private static IEntityType EntityType<TEntity>()
     {
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseCosmos(ConnectionString, databaseName: "model-tests")
@@ -21,9 +21,13 @@ public sealed class AppDbContextModelTests
 
         using var context = new AppDbContext(options);
 
-        return context.Model.FindEntityType(typeof(AppUser))
-            ?? throw new InvalidOperationException("AppUser is not in the model.");
+        return context.Model.FindEntityType(typeof(TEntity))
+            ?? throw new InvalidOperationException($"{typeof(TEntity).Name} is not in the model.");
     }
+
+    private static IEntityType UserEntityType() => EntityType<AppUser>();
+
+    private static IEntityType RunEntityType() => EntityType<Run>();
 
     [Fact]
     public void UsersAreStoredInTheUsersContainer()
@@ -50,5 +54,43 @@ public sealed class AppDbContextModelTests
         Assert.NotNull(concurrencyStamp);
         Assert.Equal("_etag", concurrencyStamp.GetJsonPropertyName());
         Assert.True(concurrencyStamp.IsConcurrencyToken);
+    }
+
+    [Fact]
+    public void RunsAreStoredInTheRunsContainer()
+    {
+        // Must match the container the AppHost creates.
+        Assert.Equal("Runs", RunEntityType().GetContainer());
+    }
+
+    [Fact]
+    public void RunsArePartitionedByTheirUser()
+    {
+        var run = RunEntityType();
+
+        Assert.Equal([nameof(Run.UserId)], run.GetPartitionKeyPropertyNames());
+        // Stored as "UserId", so the AppHost's partition key path is "/UserId" (case-sensitive).
+        Assert.Equal("UserId", run.FindProperty(nameof(Run.UserId))?.GetJsonPropertyName());
+    }
+
+    [Fact]
+    public void RunKeyIncludesThePartitionKey()
+    {
+        // EF Core 9+ adds the partition key to the key, so finding a run takes both: FindAsync([runId, userId]).
+        var key = RunEntityType().FindPrimaryKey();
+
+        Assert.NotNull(key);
+        Assert.Equal([nameof(Run.Id), nameof(Run.UserId)], key.Properties.Select(p => p.Name));
+    }
+
+    [Fact]
+    public void RunsUseTheCosmosETagForConcurrency()
+    {
+        // A shadow property: Run has no ETag of its own.
+        var concurrencyTokens = RunEntityType().GetProperties().Where(p => p.IsConcurrencyToken).ToList();
+
+        var etag = Assert.Single(concurrencyTokens);
+        Assert.Equal("_etag", etag.GetJsonPropertyName());
+        Assert.True(etag.IsShadowProperty());
     }
 }
