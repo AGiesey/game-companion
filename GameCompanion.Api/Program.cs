@@ -1,7 +1,25 @@
+using System.Data.Common;            // DbConnectionStringBuilder
+using GameCompanion.Api.Data;        // AppDbContext
+using Microsoft.Azure.Cosmos;        // ConnectionMode
+using Microsoft.EntityFrameworkCore; // UseCosmos
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 builder.AddAzureCosmosClient("gamecompanion");
+
+var cosmosConnectionString = builder.Configuration.GetConnectionString("gamecompanion")
+    ?? throw new InvalidOperationException("Connection string 'gamecompanion' is missing.");
+
+var cosmosSettings = new DbConnectionStringBuilder { ConnectionString = cosmosConnectionString };
+var databaseName = cosmosSettings.TryGetValue("Database", out var value) && value is string name
+    ? name
+    : throw new InvalidOperationException("Connection string 'gamecompanion' has no Database.");
+
+builder.Services.AddDbContext<AppDbContext>(options => 
+    options.UseCosmos(cosmosConnectionString, databaseName, cosmos => 
+        cosmos.ConnectionMode(ConnectionMode.Gateway)
+    ));
 
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddProblemDetails();

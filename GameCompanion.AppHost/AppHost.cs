@@ -4,6 +4,7 @@ var cosmos = builder.AddAzureCosmosDB("cosmos")
     .RunAsEmulator(emulator => emulator.WithDataExplorer());
 
 var database = cosmos.AddCosmosDatabase("gamecompanion");
+database.AddContainer("Users", "/id", "Users");
 
 var api = builder.AddProject<Projects.GameCompanion_Api>("api")
     .WithReference(database)

@@ -1,0 +1,17 @@
+{
+  // No AI ghost text in this repo: the point is to write the code by hand.
+  "editor.inlineSuggest.enabled": false,
+  "github.copilot.enable": {
+    "*": false
+  },
+  "github.copilot.nextEditSuggestions.enabled": false,
+
+  // Keep the classic completion list (members after ".", keywords, snippets).
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "off",
+    "strings": "off"
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.parameterHints.enabled": true
+}
