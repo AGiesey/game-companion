@@ -1,15 +1,10 @@
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import App from '../App.tsx'
 import { createAccount } from '../api/account.ts'
-import { demoAccount } from '../api/stubs/accountStub.ts'
+import { demoAccount } from '../test/fakeAccountServer.ts'
 import { renderWithProviders } from '../test/render.tsx'
-
-vi.mock('../api/account.ts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../api/account.ts')>()
-  return { ...actual, createAccount: vi.fn(actual.createAccount) }
-})
 
 async function openCreateAccount() {
   const user = userEvent.setup()

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { ApiError } from '../client.ts'
+import { ApiError } from '../api/client.ts'
 import {
   createAccount,
   demoAccount,
@@ -10,7 +10,7 @@ import {
   resetPassword,
   signIn,
   signOut,
-} from './accountStub.ts'
+} from './fakeAccountServer.ts'
 
 afterEach(() => {
   vi.restoreAllMocks()
@@ -23,7 +23,7 @@ async function apiErrorFrom(promise: Promise<unknown>): Promise<ApiError> {
   return error as ApiError
 }
 
-describe('account stub', () => {
+describe('fake account server', () => {
   it('has nobody signed in at first', async () => {
     await expect(getSession()).resolves.toBeNull()
   })

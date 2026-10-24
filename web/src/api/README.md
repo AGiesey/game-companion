@@ -52,10 +52,9 @@ export function getRunJournal(runId: string, { signal }: RequestOptions = {}): P
 
 ### Stubs with state
 
-Some needs only make sense with state behind them. Those stubs delegate to a small fake server in `stubs/`, which only the matching API file imports (components never do):
+Some needs only make sense with state behind them. Those stubs delegate to a small fake server in `stubs/`, which only the matching API file imports (components never do). Stub state lives in browser storage under keys starting `game-companion.stub.`; clear those keys (or all site data) to start fresh.
 
-- **`stubs/accountStub.ts`**, used by `account.ts`. Demo account: `vaela@example.com` / `stub-password`. Demo reset link: `/reset-password?email=vaela@example.com&token=stub-reset-token`. New accounts need a password of at least 8 characters (a stand-in rule; the real rules are the backend's).
-- Stub state lives in browser storage under keys starting `game-companion.stub.`. Clear those keys (or all site data) to start fresh.
+None exist right now. The account stub's fake server became a test fake when the real endpoints arrived (see below).
 
 ## Replacing a stub
 
@@ -64,5 +63,10 @@ When the endpoint exists:
 1. Replace the stub's body with `apiGet` or `apiSend` and remove the `// STUB` comment.
 2. If the real response shape differs from the stub's type, update the type. TypeScript then shows every component that needs adjusting.
 3. Mark the need `done` in `specs/backend-needs.md`.
+4. If tests drove the stub, give them a fake instead so they still run without a server. A stateful stub's fake server can move to `src/test/` and be wired in by `src/test/setup.ts` with `vi.mock`.
 
 Components and hooks don't change.
+
+## Test fakes
+
+- **`src/test/fakeAccountServer.ts`** stands in for the account endpoints in every test (`setup.ts` routes `account.ts` to it). Demo account: `vaela@example.com` / `stub-password`. Demo reset token: `stub-reset-token`. New accounts need a password of at least 8 characters, a stand-in rule; the real rules are the backend's.

@@ -1,7 +1,8 @@
-// A fake account server that runs in the browser, standing in for ASP.NET Core Identity until the developer
-// builds it. Only web/src/api/account.ts may use this file. It throws the same ApiErrors a real backend would.
-import { ApiError } from '../client.ts'
-import { stub, type StubOptions } from '../stub.ts'
+// A fake of the API's account endpoints for tests, so pages can sign in, create accounts and reset passwords
+// without a server. setup.ts routes web/src/api/account.ts to it in every test. It throws the same ApiErrors the
+// real endpoints do.
+import { ApiError } from '../api/client.ts'
+import { stub, type StubOptions } from '../api/stub.ts'
 
 export interface StubSession {
   userId: string

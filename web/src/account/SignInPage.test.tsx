@@ -5,15 +5,10 @@ import App from '../App.tsx'
 import { signIn } from '../api/account.ts'
 import { ApiError } from '../api/client.ts'
 import { setStubDelays } from '../api/stub.ts'
-import { demoAccount } from '../api/stubs/accountStub.ts'
+import { demoAccount } from '../test/fakeAccountServer.ts'
 import { renderWithProviders } from '../test/render.tsx'
 
 // Real stub behaviour by default; individual tests can make signIn fail differently.
-vi.mock('../api/account.ts', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../api/account.ts')>()
-  return { ...actual, signIn: vi.fn(actual.signIn) }
-})
-
 afterEach(() => {
   setStubDelays({ valueMs: 0 })
 })

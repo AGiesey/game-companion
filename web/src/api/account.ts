@@ -1,43 +1,42 @@
-// Accounts and the signed-in session. Every function is a stub until the developer builds the Identity endpoints;
-// replace each body with apiGet/apiSend from ./client.ts (see README.md).
-import type { RequestOptions } from './client.ts'
-import * as accountStub from './stubs/accountStub.ts'
+// Accounts and the signed-in session. The API keeps the session in a cookie, which the browser sends with every
+// same-origin request, so none of these functions handle tokens.
+import { ApiError, apiGet, apiSend, type RequestOptions } from './client.ts'
 
 export interface Session {
   userId: string
   email: string
 }
 
-// STUB: Current session (specs/backend-needs.md)
-// Returns null when nobody is signed in. The real call should map a 401 from the session endpoint to null too.
-export function getSession({ signal }: RequestOptions = {}): Promise<Session | null> {
-  return accountStub.getSession({ signal })
+// Returns null when nobody is signed in: the session endpoint answers 401, which here isn't an ended session.
+export async function getSession({ signal }: RequestOptions = {}): Promise<Session | null> {
+  try {
+    return await apiGet<Session>('/account/session', { signal })
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 401) return null
+    throw error
+  }
 }
 
-// STUB: Sign in (specs/backend-needs.md)
-// Fails with ApiError 401 for a wrong email or password.
+// Fails with ApiError 401 for a wrong email or password, and 403 (with a title to show) when the account is locked out.
 export function signIn(request: { email: string; password: string; remember: boolean }): Promise<Session> {
-  return accountStub.signIn(request)
+  return apiSend<Session>('POST', '/account/sign-in', request)
 }
 
-// STUB: Sign out (specs/backend-needs.md)
 export function signOut(): Promise<void> {
-  return accountStub.signOut()
+  return apiSend<void>('POST', '/account/sign-out')
 }
 
-// STUB: Create account (specs/backend-needs.md)
 // Signs the new player in. Fails with ApiError 400 carrying field errors.
 export function createAccount(request: { email: string; password: string }): Promise<Session> {
-  return accountStub.createAccount(request)
+  return apiSend<Session>('POST', '/account', request)
 }
 
-// STUB: Request a password reset (specs/backend-needs.md)
+// Succeeds whether or not the account exists, so the response doesn't reveal which emails have accounts.
 export function requestPasswordReset(request: { email: string }): Promise<void> {
-  return accountStub.requestPasswordReset(request)
+  return apiSend<void>('POST', '/account/forgot-password', request)
 }
 
-// STUB: Reset password (specs/backend-needs.md)
 // Fails with ApiError 400: titled "Invalid or expired reset link", or carrying password field errors.
 export function resetPassword(request: { email: string; token: string; newPassword: string }): Promise<void> {
-  return accountStub.resetPassword(request)
+  return apiSend<void>('POST', '/account/reset-password', request)
 }
