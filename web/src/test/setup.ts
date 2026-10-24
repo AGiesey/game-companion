@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
 import { afterEach, beforeAll, vi } from 'vitest'
 import { setStubDelays } from '../api/stub.ts'
+import { resetRunStubMemory } from '../api/stubs/runStub.ts'
 
 // Every test talks to the fake account server instead of the API. Each function is a vi.fn, so a test can
 // override one call, for example vi.mocked(signIn).mockRejectedValueOnce(...).
@@ -26,8 +27,10 @@ beforeAll(() => {
 // Testing Library only cleans up automatically when test globals are on; they're off here.
 afterEach(() => {
   cleanup()
-  // ThemeProvider and the fake account server write to storage; reset so tests don't see each other's state.
+  // ThemeProvider, the fake account server and the run stub write to storage; reset so tests don't see each
+  // other's state.
   localStorage.clear()
   sessionStorage.clear()
   delete document.documentElement.dataset.theme
+  resetRunStubMemory()
 })

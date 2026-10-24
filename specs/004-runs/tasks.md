@@ -16,7 +16,7 @@ Each task ends with a local commit naming the feature and task (for example `004
 - [x] [T005] Create `web/src/api/runs.ts` with the `Run` type and `listRuns`, `createRun`, `getRun` and `recordRunOpened`. Each is marked `// STUB: <need> (specs/backend-needs.md)` and delegates to `runStub.ts`. Update "Stubs with state" in `web/src/api/README.md` to name the run stub and its storage key. In `specs/backend-needs.md`, move the four `004-runs` entries to `stubbed`. (FR-23, SC-6)
 - [x] [T006] Add `ThemeSourcesContext` and `run`/`user` theme state to `web/src/theme/ThemeProvider.tsx`; props take precedence over context values. Create `web/src/theme/useThemeSources.ts` with `useRunTheme` and `useUserTheme`, each a layout effect that sets its source and clears it on unmount. Add `playerDefaultThemeId = 'general'` to `web/src/theme/themes.ts`, commented as the stand-in until settings. Extend `web/src/theme/ThemeProvider.test.tsx`: each hook sets and clears its source, the run theme beats the user theme, and props beat hooks. (FR-15, FR-19, Defaults)
 - [x] [T007] Create `web/src/runs/runQueries.ts`: `runsQueryKey`, `runQueryKey`, `useRuns`, `useRun` and `useCreateRun`. On success, `useCreateRun` puts the new run into `runQueryKey(run.id)` and invalidates the list. (FR-16, FR-23)
-- [ ] [T008] Create `web/src/test/runs.ts` with `signInAsDemo()` and `seedRuns(...)`, and make `web/src/test/setup.ts` call `resetRunStubMemory()` after each test.
+- [x] [T008] Create `web/src/test/runs.ts` with `signInAsDemo()` and `seedRuns(...)`, and make `web/src/test/setup.ts` call `resetRunStubMemory()` after each test.
 
 ## Phase 3: User Story — Landing and the signed-in theme (scenarios 1, 2, 7)
 

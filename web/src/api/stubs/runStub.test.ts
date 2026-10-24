@@ -1,16 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { demoAccount } from '../../test/fakeAccountServer.ts'
-import { createAccount, signIn, signOut } from '../account.ts'
+import { signInAsDemo } from '../../test/runs.ts'
+import { createAccount, signOut } from '../account.ts'
 import { ApiError } from '../client.ts'
 import { createRun, getRun, listRuns, recordRunOpened, seedStubRuns, type StubRun } from './runStub.ts'
 
 afterEach(() => {
   vi.restoreAllMocks()
 })
-
-async function signInAsDemo() {
-  return signIn({ email: demoAccount.email, password: demoAccount.password, remember: true })
-}
 
 async function apiErrorFrom(promise: Promise<unknown>): Promise<ApiError> {
   const error = await promise.catch((e: unknown) => e)
