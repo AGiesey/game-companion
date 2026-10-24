@@ -21,14 +21,14 @@ async function openSignIn(route = '/sign-in') {
 }
 
 describe('SignInPage', () => {
-  it('signs in and goes home', async () => {
+  it('signs in and lands on the run list when the player has no runs', async () => {
     const user = await openSignIn()
 
     await user.type(screen.getByLabelText('Email'), demoAccount.email)
     await user.type(screen.getByLabelText('Password'), demoAccount.password)
     await user.click(screen.getByRole('button', { name: 'Enter' }))
 
-    expect(await screen.findByText(`Signed in as ${demoAccount.email}`)).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Your runs' })).toBeInTheDocument()
   })
 
   it('returns to the remembered page after signing in', async () => {
@@ -85,7 +85,7 @@ describe('SignInPage', () => {
     await user.type(screen.getByLabelText('Password'), `${demoAccount.password}{Enter}`)
 
     expect(screen.getByRole('button', { name: 'Entering…' })).toBeDisabled()
-    expect(await screen.findByText(`Signed in as ${demoAccount.email}`)).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Your runs' })).toBeInTheDocument()
   })
 
   it('keeps the return path when switching to create account', async () => {

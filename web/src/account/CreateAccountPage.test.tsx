@@ -21,12 +21,12 @@ async function fillIn(user: ReturnType<typeof userEvent.setup>, email: string, p
 }
 
 describe('CreateAccountPage', () => {
-  it('creates the account, signs it in and goes home', async () => {
+  it('creates the account, signs it in and lands on the empty run list', async () => {
     const user = await openCreateAccount()
 
     await fillIn(user, 'tarnished@example.com', 'long-enough', 'long-enough')
 
-    expect(await screen.findByText('Signed in as tarnished@example.com')).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Your runs' })).toBeInTheDocument()
   })
 
   it('catches mismatched passwords without calling the API', async () => {

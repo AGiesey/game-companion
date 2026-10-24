@@ -8,17 +8,17 @@ import { ApiError } from '../api/client.ts'
 import { demoAccount, signIn } from '../test/fakeAccountServer.ts'
 import { renderWithProviders } from '../test/render.tsx'
 
-async function openHomeSignedIn() {
+async function openRunListSignedIn() {
   await signIn({ email: demoAccount.email, password: demoAccount.password, remember: true })
   const user = userEvent.setup()
-  const rendered = renderWithProviders(<App />, { route: '/' })
-  await screen.findByText(`Signed in as ${demoAccount.email}`)
+  const rendered = renderWithProviders(<App />, { route: '/runs' })
+  await screen.findByRole('heading', { name: 'Your runs' })
   return { user, ...rendered }
 }
 
-describe('HomePage', () => {
+describe('RunListPage', () => {
   it('signs out and returns to sign-in', async () => {
-    const { user, queryClient } = await openHomeSignedIn()
+    const { user, queryClient } = await openRunListSignedIn()
 
     await user.click(screen.getByRole('button', { name: 'Sign out' }))
 
@@ -28,7 +28,7 @@ describe('HomePage', () => {
 
   it('still signs out locally when the server call fails', async () => {
     vi.mocked(signOut).mockRejectedValueOnce(new ApiError(0, 'Couldn’t reach the server.'))
-    const { user, queryClient } = await openHomeSignedIn()
+    const { user, queryClient } = await openRunListSignedIn()
 
     await user.click(screen.getByRole('button', { name: 'Sign out' }))
 

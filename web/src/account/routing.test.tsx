@@ -41,11 +41,11 @@ describe('protected routes', () => {
     expect(currentLocation()).toBe('/sign-in')
   })
 
-  it('shows home to a signed-in player', async () => {
+  it('lets a signed-in player in', async () => {
     await signInDemo()
     renderApp('/')
 
-    expect(await screen.findByText(`Signed in as ${demoAccount.email}`)).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Your runs' })).toBeInTheDocument()
   })
 
   it('shows a loading state, not sign-in, while checking the session', async () => {
@@ -62,14 +62,14 @@ describe('session ending', () => {
   it('sends the player to sign-in when an unrelated request gets a 401', async () => {
     await signInDemo()
     const { queryClient } = renderApp('/')
-    await screen.findByText(`Signed in as ${demoAccount.email}`)
+    await screen.findByRole('heading', { name: 'Your runs' })
 
     await queryClient
       .fetchQuery({ queryKey: ['journal'], queryFn: () => Promise.reject(new ApiError(401, 'Unauthorized')) })
       .catch(() => {})
 
     expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument()
-    expect(currentLocation()).toBe('/sign-in')
+    expect(currentLocation()).toBe('/sign-in?returnTo=%2Fruns')
   })
 })
 
@@ -77,7 +77,7 @@ describe('back/forward cache', () => {
   it('rechecks the session when the browser restores a page from before signing out', async () => {
     await signInDemo()
     renderApp('/')
-    await screen.findByText(`Signed in as ${demoAccount.email}`)
+    await screen.findByRole('heading', { name: 'Your runs' })
 
     // Signed out since this page was cached; then the browser restores it.
     await signOut()
@@ -86,17 +86,17 @@ describe('back/forward cache', () => {
     window.dispatchEvent(restore)
 
     expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument()
-    expect(screen.queryByText(/Signed in as/)).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Your runs' })).not.toBeInTheDocument()
   })
 })
 
 describe('signed-out-only routes', () => {
-  it('sends a signed-in player from sign-in to home', async () => {
+  it('sends a signed-in player from sign-in to their runs', async () => {
     await signInDemo()
     renderApp('/sign-in')
 
-    expect(await screen.findByText(`Signed in as ${demoAccount.email}`)).toBeInTheDocument()
-    expect(currentLocation()).toBe('/')
+    expect(await screen.findByRole('heading', { name: 'Your runs' })).toBeInTheDocument()
+    expect(currentLocation()).toBe('/runs')
   })
 
   it('sends a signed-in player to a safe return path', async () => {
@@ -111,7 +111,7 @@ describe('signed-out-only routes', () => {
     await signInDemo()
     renderApp('/sign-in?returnTo=%2F%2Fevil.example')
 
-    expect(await screen.findByText(`Signed in as ${demoAccount.email}`)).toBeInTheDocument()
-    expect(currentLocation()).toBe('/')
+    expect(await screen.findByRole('heading', { name: 'Your runs' })).toBeInTheDocument()
+    expect(currentLocation()).toBe('/runs')
   })
 })
