@@ -81,7 +81,7 @@ Each task ends with a local commit naming the feature and task (for example `004
 
 - [x] [T017] Move the run header from `web/src/preview/ThemePreview.tsx` into `web/src/runs/RunHeader.tsx`, taking `title`, `subtitle`, `titleAs`, `actions` and a back `Link` to `/runs` labelled "Your runs". The preview renders it with `titleAs="h3"` and its menu button as `actions`. Its tests still pass. (FR-20)
 - [x] [T018] Create `web/src/runs/useRecordRunOpened.ts`. Once the run has loaded, it records the open once per `runId` + `location.key`, using a ref to skip repeats. On success it invalidates the list, and it shows nothing on error. (FR-5, FR-6)
-- [ ] [T019] Build `web/src/runs/RunPage.tsx` and `web/src/runs/RunNotFound.tsx`:
+- [x] [T019] Build `web/src/runs/RunPage.tsx` and `web/src/runs/RunNotFound.tsx`:
   - `useRun(runId)` and `useRunTheme(run.data?.themeId)`.
   - Loading → `FullPageLoading`; a `404` → `RunNotFound` with a link to `/runs`; other errors → message and **Try again**.
   - Loaded: `RunHeader` with the run name and `gameName(gameId)`, the placeholder note, and `<title>` set to the run name.
