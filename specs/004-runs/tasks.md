@@ -66,7 +66,7 @@ Each task ends with a local commit naming the feature and task (for example `004
   - Move focus to the first error, using the first radio for the game group.
 
   (FR-12 to FR-17, FR-22)
-- [ ] [T016] Create `web/src/runs/NewRunPage.test.tsx`. It covers:
+- [x] [T016] Create `web/src/runs/NewRunPage.test.tsx`. It covers:
   - picking Elden Ring sets `data-theme` to `elden-ring`, and cancelling returns to `/runs` in `general` with no run created;
   - success lands in the new run with Back going to `/runs`, and the run is then first in the list;
   - empty submit shows linked errors on Name and Game and focuses Name;

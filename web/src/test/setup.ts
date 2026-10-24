@@ -44,4 +44,6 @@ afterEach(() => {
   sessionStorage.clear()
   delete document.documentElement.dataset.theme
   resetRunStubMemory()
+  // Forget calls and any unused mock...Once overrides on the API mocks; their implementations stay.
+  vi.clearAllMocks()
 })
