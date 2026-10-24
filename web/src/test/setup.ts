@@ -19,6 +19,17 @@ vi.mock('../api/account.ts', async () => {
   }
 })
 
+// The run functions keep calling the run stub, but each is a vi.fn too, so a test can make one call fail.
+vi.mock('../api/runs.ts', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../api/runs.ts')>()
+  return {
+    listRuns: vi.fn(actual.listRuns),
+    createRun: vi.fn(actual.createRun),
+    getRun: vi.fn(actual.getRun),
+    recordRunOpened: vi.fn(actual.recordRunOpened),
+  }
+})
+
 // Stub-backed pages and the fake account server resolve immediately in tests.
 beforeAll(() => {
   setStubDelays({ valueMs: 0, chunkMs: 0 })

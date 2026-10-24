@@ -21,7 +21,7 @@ Each task ends with a local commit naming the feature and task (for example `004
 ## Phase 3: User Story — Landing and the signed-in theme (scenarios 1, 2, 7)
 
 - [x] [T009] Call `useUserTheme(session.data ? playerDefaultThemeId : null)` in `web/src/account/RequireSession.tsx`. Create `web/src/runs/LandingPage.tsx`: loading → `FullPageLoading`, error → `/runs`, otherwise the most recent run or `/runs`, always with `replace`. Add placeholder `RunListPage`, `NewRunPage` and `RunPage` components (heading only) so the routes resolve. Add the `/`, `/runs`, `/runs/new` and `/runs/:runId` routes to `web/src/App.tsx`. Delete `web/src/home/`. Update `web/src/account/routing.test.tsx`, `App.test.tsx` and the account page tests wherever they expected the home screen. (FR-1 to FR-4, FR-7)
-- [ ] [T010] Create `web/src/runs/LandingPage.test.tsx`. It covers:
+- [x] [T010] Create `web/src/runs/LandingPage.test.tsx`. It covers:
   - landing in the most recent run, after signing in;
   - landing on `/runs` with no runs, including right after creating an account;
   - landing on `/runs` when the list fails;
