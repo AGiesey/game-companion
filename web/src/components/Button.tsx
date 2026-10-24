@@ -1,20 +1,10 @@
 import type { ButtonHTMLAttributes } from 'react'
+import { buttonClasses, type ButtonVariant } from './buttonClasses.ts'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary'
-}
-
-const variants = {
-  primary: 'bg-accent text-on-accent font-semibold',
-  secondary: 'border border-border text-text',
+  variant?: ButtonVariant
 }
 
 export function Button({ variant = 'secondary', type = 'button', className = '', ...props }: ButtonProps) {
-  return (
-    <button
-      type={type}
-      className={`rounded-md px-4 py-3 text-body transition-opacity hover:opacity-90 disabled:opacity-50 ${variants[variant]} ${className}`}
-      {...props}
-    />
-  )
+  return <button type={type} className={`${buttonClasses(variant)} ${className}`} {...props} />
 }

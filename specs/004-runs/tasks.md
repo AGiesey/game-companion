@@ -7,7 +7,7 @@ Each task ends with a local commit naming the feature and task (for example `004
 ## Phase 1: Setup — shared helpers
 
 - [x] [T001] Move `web/src/account/formErrors.ts` (+ `formErrors.test.ts`) and `web/src/account/useFocusOnError.ts` to `web/src/forms/`, and move the `FieldErrors<Field>` type out of `web/src/account/validation.ts` into `web/src/forms/fieldErrors.ts`. Update the account pages' imports. No behavior change: `npm run build`, `npm run lint` and `npm test` pass.
-- [ ] [T002] Export `buttonClasses(variant)` from `web/src/components/Button.tsx` and use it in `Button` itself. No visual change.
+- [x] [T002] Export `buttonClasses(variant)` from `web/src/components/Button.tsx` and use it in `Button` itself. No visual change.
 
 ## Phase 2: Foundational — games, API, theme sources
 
