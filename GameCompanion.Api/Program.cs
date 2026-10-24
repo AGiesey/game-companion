@@ -1,5 +1,6 @@
 using System.Data.Common;            // DbConnectionStringBuilder
-using GameCompanion.Api.Data;        // AppDbContext
+using GameCompanion.Api.Data;        // AppDbContext, AppUserStore
+using GameCompanion.Api.Models;      // AppUser
 using Microsoft.Azure.Cosmos;        // ConnectionMode
 using Microsoft.EntityFrameworkCore; // UseCosmos
 
@@ -20,6 +21,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseCosmos(cosmosConnectionString, databaseName, cosmos => 
         cosmos.ConnectionMode(ConnectionMode.Gateway)
     ));
+
+builder.Services.AddIdentityCore<AppUser>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+})
+.AddUserStore<AppUserStore>();
 
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddProblemDetails();

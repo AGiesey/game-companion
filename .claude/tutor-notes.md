@@ -1,9 +1,5 @@
 ## Current goal
-None. Suggested next: the Identity user store for AppUser in Data/ (IUserStore, IUserPasswordStore, IUserEmailStore, IUserSecurityStampStore, IUserLockoutStore) over AppDbContext. Carry over:
-- FindByEmailAsync: cross-partition query on NormalizedEmail, with the comment: if the app grows, replace with an email → user id lookup document (point read; also enforces unique emails, which Cosmos unique keys can't since pk is /id).
-- UpdateAsync: don't regenerate ConcurrencyStamp (it's the _etag); catch DbUpdateConcurrencyException → IdentityResult.Failed(ErrorDescriber.ConcurrencyFailure()).
-- Async only (EF Cosmos throws on sync I/O); pass CancellationToken through.
-- Tests: round-trip save/load by id against the emulator, and a stale-stamp update that fails with a concurrency error.
+None. Next: the account endpoints (Claude drafts AccountController + SignInManager/cookie auth/token providers; developer reviews), then swap the front end's account stubs.
 
 ## Learned / to revisit
 - Cosmos partitioning: partition key = shard key; point read (id + pk) is cheapest; queries without pk fan out; transactions only within one logical partition; 20 GB per logical partition; hierarchical keys exist.
@@ -21,8 +17,16 @@ None. Suggested next: the Identity user store for AppUser in Data/ (IUserStore, 
 - Tested on the emulator (EF Cosmos 10.0.13): a missing JSON field loads as default(T) silently; property initializers are overwritten (int = 5 → 0); non-nullable string → null. Properties are stored PascalCase ("CreatedAt"), except id and $type → future partition key paths like /UserId. Rule for new properties: nullable or backfill.
 - EF Cosmos on the Aspire emulator: Gateway mode; container names and partition key paths are case-sensitive and must match the EF mapping (model tests guard this).
 - Tests run on Microsoft.Testing.Platform: `dotnet test --project GameCompanion.Api.Tests` (global.json opts in; .NET 10 SDK refuses VSTest with xUnit v3).
+- Store getters/setters only touch the in-memory user; find methods fetch, Create/Update/Delete save; EF change tracking in the scoped AppDbContext links them.
+- FindAsync = lookup by primary key only; returns ValueTask. Expression-bodied member ≠ lambda.
+- async/await go together; try/catch only catches awaited calls; interface signatures are fixed, dependencies go on the class (primary ctor).
+- FindAsync(key, token) compiles but treats the token as a second key (params object[]); use FindAsync([key], token).
+- Identity registration: AddIdentityCore (not AddIdentity: no roles, no cookie redirects) + AddUserStore (scoped; singleton would capture the scoped context). One registration covers every store interface. RequireUniqueEmail = true.
+- The vnext emulator returns the ETag quoted from a create but stores _etag unquoted; If-Match accepts either. Tests compare with quotes trimmed.
+- Store tests run against a real emulator via Aspire.Hosting.Testing (CosmosFixture starts the AppHost without api/web, once per run).
 - To revisit: AppDbContext isn't sealed (optional).
 - To revisit: when a second entity is mapped, move each mapping into its own IEntityTypeConfiguration<T> class in Data/ and use ApplyConfigurationsFromAssembly.
 
 ## Done
+- 2026-10-24: AppUserStore (user, password, email, security stamp, lockout stores) registered with AddIdentityCore; store + UserManager tests against the emulator. Developer wrote IUserStore, password and email groups; Claude wrote Delete, security stamp and lockout bodies, the registration and the tests on request.
 - 2026-10-24: AppUser : IdentityUser mapped to Cosmos (Users container, pk /id, ConcurrencyStamp = _etag), AppDbContext registered, container in AppHost, model tests.
