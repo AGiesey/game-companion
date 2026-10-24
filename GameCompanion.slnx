@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="GameCompanion.Api.IntegrationTests/GameCompanion.Api.IntegrationTests.csproj" />
   <Project Path="GameCompanion.Api.Tests/GameCompanion.Api.Tests.csproj" />
   <Project Path="GameCompanion.Api/GameCompanion.Api.csproj" />
   <Project Path="GameCompanion.AppHost/GameCompanion.AppHost.csproj" />

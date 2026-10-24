@@ -37,6 +37,7 @@ Use the plan's terms consistently in code, comments and conversation: **run** (n
 
 - Nullable reference types on; warnings as errors; built-in .NET analyzers on. Fix warnings, don't suppress them without saying why.
 - The API is organized by layer, not by feature (the developer's choice, matching their day job): `Controllers/`, `Models/` (entities such as the user), `Services/`, `Data/` (the `DbContext`, EF configuration, the Identity user store). Namespaces follow folders.
+- Tests: `GameCompanion.Api.Tests` holds unit tests (in memory, no Docker). `GameCompanion.Api.IntegrationTests` holds tests that need the Cosmos emulator or the API hosted with `WebApplicationFactory`. Run one with `dotnet test --project <project>`, or all with `dotnet test --solution GameCompanion.slnx`.
 - File-scoped namespaces. Prefer records for immutable data, `required` members over constructor sprawl, pattern matching where it reads well.
 - Async all the way down, with a `CancellationToken` passed through.
 - API errors as ProblemDetails.

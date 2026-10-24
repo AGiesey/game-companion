@@ -16,14 +16,14 @@ None. Next: the account endpoints (Claude drafts AccountController + SignInManag
 - Plain DbContext: no base.OnModelCreating needed (tutorials use IdentityDbContext, which does need it).
 - Tested on the emulator (EF Cosmos 10.0.13): a missing JSON field loads as default(T) silently; property initializers are overwritten (int = 5 → 0); non-nullable string → null. Properties are stored PascalCase ("CreatedAt"), except id and $type → future partition key paths like /UserId. Rule for new properties: nullable or backfill.
 - EF Cosmos on the Aspire emulator: Gateway mode; container names and partition key paths are case-sensitive and must match the EF mapping (model tests guard this).
-- Tests run on Microsoft.Testing.Platform: `dotnet test --project GameCompanion.Api.Tests` (global.json opts in; .NET 10 SDK refuses VSTest with xUnit v3).
+- Tests run on Microsoft.Testing.Platform (global.json opts in; .NET 10 SDK refuses VSTest with xUnit v3). Unit tests: `dotnet test --project GameCompanion.Api.Tests`; emulator/API tests: `GameCompanion.Api.IntegrationTests`.
 - Store getters/setters only touch the in-memory user; find methods fetch, Create/Update/Delete save; EF change tracking in the scoped AppDbContext links them.
 - FindAsync = lookup by primary key only; returns ValueTask. Expression-bodied member ≠ lambda.
 - async/await go together; try/catch only catches awaited calls; interface signatures are fixed, dependencies go on the class (primary ctor).
 - FindAsync(key, token) compiles but treats the token as a second key (params object[]); use FindAsync([key], token).
 - Identity registration: AddIdentityCore (not AddIdentity: no roles, no cookie redirects) + AddUserStore (scoped; singleton would capture the scoped context). One registration covers every store interface. RequireUniqueEmail = true.
 - The vnext emulator returns the ETag quoted from a create but stores _etag unquoted; If-Match accepts either. Tests compare with quotes trimmed.
-- Store tests run against a real emulator via Aspire.Hosting.Testing (CosmosFixture starts the AppHost without api/web, once per run).
+- Store tests run against a real emulator via Aspire.Hosting.Testing (CosmosFixture in GameCompanion.Api.IntegrationTests starts the AppHost without api/web, once per run).
 - To revisit: AppDbContext isn't sealed (optional).
 - To revisit: when a second entity is mapped, move each mapping into its own IEntityTypeConfiguration<T> class in Data/ and use ApplyConfigurationsFromAssembly.
 

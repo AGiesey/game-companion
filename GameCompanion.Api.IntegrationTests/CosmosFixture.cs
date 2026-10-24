@@ -5,17 +5,19 @@ using GameCompanion.Api.Data;
 using Microsoft.Azure.Cosmos;
 using Microsoft.EntityFrameworkCore;
 
-[assembly: AssemblyFixture(typeof(GameCompanion.Api.Tests.CosmosFixture))]
+[assembly: AssemblyFixture(typeof(GameCompanion.Api.IntegrationTests.CosmosFixture))]
 
-namespace GameCompanion.Api.Tests;
+namespace GameCompanion.Api.IntegrationTests;
 
 // Starts the AppHost's Cosmos emulator once for the whole test run, with the database and Users container
 // exactly as the AppHost defines them. The API and the Vite front end aren't needed, so they're left out.
 public sealed class CosmosFixture : IAsyncLifetime
 {
     private DistributedApplication? _app;
-    private string _connectionString = "";
     private string _databaseName = "";
+
+    // The AppHost's connection string for the gamecompanion database, as the API receives it.
+    public string ConnectionString { get; private set; } = "";
 
     public async ValueTask InitializeAsync()
     {
@@ -31,11 +33,11 @@ public sealed class CosmosFixture : IAsyncLifetime
         await _app.StartAsync(cancellationToken);
         await _app.ResourceNotifications.WaitForResourceHealthyAsync("Users", cancellationToken);
 
-        _connectionString = await _app.GetConnectionStringAsync("gamecompanion", cancellationToken)
+        ConnectionString = await _app.GetConnectionStringAsync("gamecompanion", cancellationToken)
             ?? throw new InvalidOperationException("The AppHost gave no connection string for 'gamecompanion'.");
 
         // Same parsing as Program.cs.
-        var settings = new DbConnectionStringBuilder { ConnectionString = _connectionString };
+        var settings = new DbConnectionStringBuilder { ConnectionString = ConnectionString };
         _databaseName = settings.TryGetValue("Database", out var value) && value is string name
             ? name
             : throw new InvalidOperationException("Connection string 'gamecompanion' has no Database.");
@@ -43,7 +45,7 @@ public sealed class CosmosFixture : IAsyncLifetime
 
     // Configures a context the way Program.cs does, for tests that build their own service collection.
     public void Configure(DbContextOptionsBuilder options)
-        => options.UseCosmos(_connectionString, _databaseName, cosmos => cosmos.ConnectionMode(ConnectionMode.Gateway));
+        => options.UseCosmos(ConnectionString, _databaseName, cosmos => cosmos.ConnectionMode(ConnectionMode.Gateway));
 
     // A new context stands in for a new request: nothing is tracked yet.
     public AppDbContext CreateContext()

@@ -3,7 +3,7 @@ using GameCompanion.Api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GameCompanion.Api.Tests.Data;
+namespace GameCompanion.Api.IntegrationTests.Data;
 
 // Runs AppUserStore against the Cosmos emulator. Each test uses fresh users, so tests don't depend on each other.
 // A new AppDbContext stands in for a new request.
