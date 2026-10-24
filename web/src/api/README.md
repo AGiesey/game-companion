@@ -54,7 +54,9 @@ export function getRunJournal(runId: string, { signal }: RequestOptions = {}): P
 
 Some needs only make sense with state behind them. Those stubs delegate to a small fake server in `stubs/`, which only the matching API file imports (components never do). Stub state lives in browser storage under keys starting `game-companion.stub.`; clear those keys (or all site data) to start fresh.
 
-None exist right now. The account stub's fake server became a test fake when the real endpoints arrived (see below).
+- **`stubs/runStub.ts`** stands in for the run endpoints, behind `runs.ts`. It finds the player through the real session endpoint, so runs are kept per account, and answers `401` when nobody is signed in. Runs live in `localStorage` under `game-companion.stub.runs`, keyed by user id; every account starts with none.
+
+The account stub's fake server became a test fake when the real endpoints arrived (see below).
 
 ## Replacing a stub
 
