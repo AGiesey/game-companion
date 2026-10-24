@@ -1,7 +1,8 @@
 import { useId, type ReactNode } from 'react'
 import { AccountLayout } from '../account/AccountLayout.tsx'
 import { Button } from '../components/Button.tsx'
-import { ArrowUpIcon, BackIcon, EyeOffIcon, JournalIcon, MenuIcon } from '../components/icons.tsx'
+import { ArrowUpIcon, EyeOffIcon, JournalIcon, MenuIcon } from '../components/icons.tsx'
+import { RunHeader } from '../runs/RunHeader.tsx'
 import { ApiStatus } from './ApiStatus.tsx'
 import { ThemeSwitcher } from './ThemeSwitcher.tsx'
 
@@ -54,7 +55,7 @@ export function ThemePreview() {
       </header>
 
       <PreviewSection title="Run header">
-        <RunHeader />
+        <PreviewRunHeader />
       </PreviewSection>
 
       <PreviewSection title="Conversation">
@@ -88,24 +89,22 @@ function PreviewSection({ title, children }: { title: string; children: ReactNod
   )
 }
 
-function RunHeader() {
+function PreviewRunHeader() {
   return (
-    <div className="-mx-4 flex items-center gap-3 border-b border-border-subtle bg-bg-chrome px-4 py-4">
-      <button type="button" aria-label="Back to runs" className="p-1 text-2xl text-text-muted">
-        <BackIcon />
-      </button>
-      <div className="min-w-0 flex-1">
-        <h3 className="truncate font-display text-2xl font-semibold text-accent">{run.title}</h3>
-        <p className="truncate text-text-muted">{run.subtitle}</p>
-      </div>
-      <button
-        type="button"
-        aria-label="Open run panel"
-        className="flex size-11 items-center justify-center rounded-md border border-border bg-surface text-2xl text-text"
-      >
-        <MenuIcon />
-      </button>
-    </div>
+    <RunHeader
+      title={run.title}
+      subtitle={run.subtitle}
+      titleAs="h3"
+      actions={
+        <button
+          type="button"
+          aria-label="Open run panel"
+          className="flex size-11 items-center justify-center rounded-md border border-border bg-surface text-2xl text-text"
+        >
+          <MenuIcon />
+        </button>
+      }
+    />
   )
 }
 
