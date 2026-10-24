@@ -5,11 +5,12 @@ import { createAccount } from '../api/account.ts'
 import { Button } from '../components/Button.tsx'
 import { FormError } from '../components/FormError.tsx'
 import { TextField } from '../components/TextField.tsx'
+import type { FieldErrors } from '../forms/fieldErrors.ts'
+import { fieldErrorsFrom } from '../forms/formErrors.ts'
+import { firstErrorTarget, useFocusOnError } from '../forms/useFocusOnError.ts'
 import { AccountLayout } from './AccountLayout.tsx'
-import { fieldErrorsFrom } from './formErrors.ts'
-import { firstErrorTarget, useFocusOnError } from './useFocusOnError.ts'
 import { sessionQueryKey } from './useSession.ts'
-import { validateCreateAccount, type FieldErrors } from './validation.ts'
+import { validateCreateAccount } from './validation.ts'
 
 const fields = ['email', 'password', 'confirmPassword'] as const
 type Field = (typeof fields)[number]

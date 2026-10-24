@@ -6,10 +6,11 @@ import { ApiError } from '../api/client.ts'
 import { Button } from '../components/Button.tsx'
 import { FormError } from '../components/FormError.tsx'
 import { TextField } from '../components/TextField.tsx'
+import type { FieldErrors } from '../forms/fieldErrors.ts'
+import { fieldErrorsFrom } from '../forms/formErrors.ts'
+import { firstErrorTarget, useFocusOnError } from '../forms/useFocusOnError.ts'
 import { AccountLayout } from './AccountLayout.tsx'
-import { fieldErrorsFrom } from './formErrors.ts'
-import { firstErrorTarget, useFocusOnError } from './useFocusOnError.ts'
-import { validateResetPassword, type FieldErrors } from './validation.ts'
+import { validateResetPassword } from './validation.ts'
 
 const fields = ['newPassword', 'confirmPassword'] as const
 type Field = (typeof fields)[number]

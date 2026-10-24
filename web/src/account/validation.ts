@@ -1,6 +1,6 @@
 // Checks that don't depend on the backend's rules (spec FR-14). Password strength is the backend's call.
 
-export type FieldErrors<Field extends string> = Partial<Record<Field, string>>
+import type { FieldErrors } from '../forms/fieldErrors.ts'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 

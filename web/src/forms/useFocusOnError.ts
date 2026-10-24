@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-// After a failed submit, moves focus to the first field with an error, or to the form-level error (spec FR-17).
+// After a failed submit, moves focus to the first field with an error, or to the form-level error (sign-in spec FR-17).
 // The focus happens in an effect because the error element may only exist after the next render.
 export function useFocusOnError<Target extends string>() {
   const elements = useRef(new Map<Target, HTMLElement | null>())

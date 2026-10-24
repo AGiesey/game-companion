@@ -1,12 +1,12 @@
 import { ApiError } from '../api/client.ts'
-import type { FieldErrors } from './validation.ts'
+import type { FieldErrors } from './fieldErrors.ts'
 
 export interface MappedErrors<Field extends string> {
   fieldErrors: FieldErrors<Field>
   formError?: string
 }
 
-// Turns a failed API call into errors a form can show (spec FR-15). Validation errors go under the matching
+// Turns a failed API call into errors a form can show (sign-in spec FR-15). Validation errors go under the matching
 // field; ASP.NET may send "Email" or "email", so keys match ignoring case. `aliases` maps server names that
 // differ from the form's (for example the API's "Password" onto a "newPassword" field).
 export function fieldErrorsFrom<Field extends string>(
