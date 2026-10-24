@@ -42,7 +42,7 @@ Each task ends with a local commit naming the feature and task (for example `004
   - **New run** as a `Link` styled with `buttonClasses('primary')`, and **Sign out** using `useSignOut`.
 
   (FR-7 to FR-11, FR-22)
-- [ ] [T013] Create `web/src/runs/RunListPage.test.tsx`. It covers:
+- [x] [T013] Create `web/src/runs/RunListPage.test.tsx`. It covers:
   - order, most recently opened first;
   - each link found by its run name, with the game and time as its description;
   - the empty state;
