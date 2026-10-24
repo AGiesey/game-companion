@@ -88,7 +88,7 @@ Each task ends with a local commit naming the feature and task (for example `004
   - Call `useRecordRunOpened`.
 
   (FR-19 to FR-22)
-- [ ] [T020] Create `web/src/runs/RunPage.test.tsx`. It covers:
+- [x] [T020] Create `web/src/runs/RunPage.test.tsx`. It covers:
   - an Elden Ring run sets `data-theme` to `elden-ring`;
   - the header shows the name as `h1` and the game, and the back link goes to `/runs` in `general`;
   - the open is recorded exactly once per arrival, both on rerender and under `StrictMode`, and recorded again when returning through the list;
