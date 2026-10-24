@@ -55,7 +55,7 @@ Each task ends with a local commit naming the feature and task (for example `004
 
 ## Phase 5: User Story — Create a run (scenarios 4, 5, 6)
 
-- [ ] [T014] Create `web/src/runs/validation.ts` with `validateNewRun` and its messages, plus `web/src/runs/validation.test.ts`. Cover a blank or whitespace-only name, a name of exactly 60 and of 61 characters after trimming, a missing game and an unknown game. (FR-13, FR-14, FR-17)
+- [x] [T014] Create `web/src/runs/validation.ts` with `validateNewRun` and its messages, plus `web/src/runs/validation.test.ts`. Cover a blank or whitespace-only name, a name of exactly 60 and of 61 characters after trimming, a missing game and an unknown game. (FR-13, FR-14, FR-17)
 - [ ] [T015] Build `web/src/runs/NewRunPage.tsx`:
   - `<title>` and `<h1>` "New run".
   - A Name `TextField` with `maxLength={60}`.
