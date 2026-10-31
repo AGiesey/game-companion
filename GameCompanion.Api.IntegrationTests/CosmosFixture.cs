@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GameCompanion.Api.IntegrationTests;
 
-// Starts the AppHost's Cosmos emulator once for the whole test run, with the database and Users container
+// Starts the AppHost's Cosmos emulator once for the whole test run, with the database and its containers
 // exactly as the AppHost defines them. The API and the Vite front end aren't needed, so they're left out.
 public sealed class CosmosFixture : IAsyncLifetime
 {
@@ -32,6 +32,7 @@ public sealed class CosmosFixture : IAsyncLifetime
         _app = await builder.BuildAsync(cancellationToken);
         await _app.StartAsync(cancellationToken);
         await _app.ResourceNotifications.WaitForResourceHealthyAsync("Users", cancellationToken);
+        await _app.ResourceNotifications.WaitForResourceHealthyAsync("Runs", cancellationToken);
 
         ConnectionString = await _app.GetConnectionStringAsync("gamecompanion", cancellationToken)
             ?? throw new InvalidOperationException("The AppHost gave no connection string for 'gamecompanion'.");

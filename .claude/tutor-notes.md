@@ -1,7 +1,17 @@
 ## Current goal
-The run service (checklist: service): list, create, get and record opened, all scoped to the signed-in user. Then RunsController (Claude drafts or developer writes: developer to say), then swap the runs.ts stubs.
+Working style (developer asked, 2026-10-25): Claude writes skeletons (signatures + TODO comments, no implementations), developer fills them in, Claude reviews.
+RunsController (checklist: endpoint), developer writes it: list, create (request DTO with [Required] [MaxLength(Run.MaxNameLength)] + known-game check), get, record opened; [Authorize], user id from the cookie, 404 for null/false, CancellationToken. Then swap the runs.ts stubs and mark the 004-runs needs done.
 
 ## Learned / to revisit
+- `new Guid()` is Guid.Empty (all zeros); `Guid.NewGuid()` makes a new one. xUnit makes a new test-class instance per test, so an instance field is fresh per test.
+- FakeTimeProvider: package Microsoft.Extensions.TimeProvider.Testing, namespace Microsoft.Extensions.Time.Testing. Read back through a new context to hit Cosmos, not the change tracker.
+- ValueTask<T> (struct, .NET Core 2.1): no allocation when the result is synchronous (FindAsync hits the change tracker); await once only, .AsTask() to store. Task stays the default.
+- FindAsync key values go in key order: (Id, UserId) → [runId, userId]; the wrong order compiles and silently returns null.
+- Attributes decorate declarations only; [LoggerMessage] sits directly above its partial method, and you call the method from the code.
+- Guid.CreateVersion7(timestamp) (.NET 9): time-ordered GUIDs. `[.. list]` spread (C# 12) to build a list from a sequence.
+- EF Cosmos (EF 9+) blocks sync I/O: always ToListAsync etc. Cosmos ORDER BY takes plain paths only (no ??), so sort small results in memory.
+- .NET 10 ships System.Linq.AsyncEnumerable in the BCL; without `using Microsoft.EntityFrameworkCore;` ToListAsync binds to that and fails (CS0411) on a DbSet.
+- `partial`: generated half + your half; `partial` goes right before `class`; [LoggerMessage] methods are declarations only.
 - Games registry: `const` (implicitly static) + `FrozenSet<string>` (.NET 8, System.Collections.Frozen; not an implicit using) via `.ToFrozenSet()`; collection expressions don't build FrozenSet. Default string comparer is ordinal.
 - `sealed` = can't be inherited (Java final class), not immutability; immutability is init/readonly/records. CA1852 only flags internal types.
 - AnalysisLevel latest-recommended: CA1725 (param names match base) is off, so renaming Configure's `builder` is fine.
@@ -33,6 +43,7 @@ The run service (checklist: service): list, create, get and record opened, all s
 - Each entity's EF mapping is its own IEntityTypeConfiguration<T> class in Data/; OnModelCreating calls ApplyConfigurationsFromAssembly, which also finds internal classes. (Claude split AppUser's out, 2026-10-24.)
 
 ## Done
+- 2026-10-31: RunService (list, create, get, record opened; last write wins on a concurrent open) + 8 emulator tests; CosmosFixture waits for Runs. Developer wrote the service methods and the first four tests; Claude wrote the last four tests on request. Not committed yet.
 - 2026-10-24: Run entity (sealed class, required/init, nullable ThemeId/LastOpenedAt, MaxNameLength), Games registry, RunConfiguration (Runs, /UserId, shadow ETag), DbSet<Run>, Runs container in the AppHost. Claude split AppUser's mapping into AppUserConfiguration and wrote the Run model tests on request.
 - 2026-10-24: AppUserStore (user, password, email, security stamp, lockout stores) registered with AddIdentityCore; store + UserManager tests against the emulator. Developer wrote IUserStore, password and email groups; Claude wrote Delete, security stamp and lockout bodies, the registration and the tests on request.
 - 2026-10-24: AppUser : IdentityUser mapped to Cosmos (Users container, pk /id, ConcurrencyStamp = _etag), AppDbContext registered, container in AppHost, model tests.
